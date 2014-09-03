@@ -1,0 +1,133 @@
+a {
+  text-decoration: none;
+  color: #000;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+.p_header {
+  padding-left: 20px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #00517a;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+.h1_header {
+  font-family: 'MovistarHeadlineBold';
+  padding-left: 20px;
+  font-size: 25px;
+  font-weight: normal;
+  color: #00517a;
+  padding-top: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  vertical-align: text-bottom;
+}
+.bienvenida {
+  position: absolute;
+  top: 0;
+  right: 80px;
+  color: #00a5bd;
+}
+#ventana {
+  font-size: small;
+}
+#ventana table td {
+  font-size: small;
+  color: #00517a;
+}
+.block_center {
+  display: block;
+  margin: 0 auto;
+  width: 70px;
+}
+.block_right {
+  display: inline-block;
+  float: right;
+}
+.detalles_factura {
+  font-size: small;
+  width: 100%;
+  padding: 0px;
+}
+.detalles_factura ul {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+.detalles_factura ul li {
+  list-style: none;
+  padding: 4px 9px;
+}
+.detalles_factura ul li.title {
+  font-weight: bold;
+  background: #00517a;
+  border-top: 1px solid #fff;
+  color: #fff;
+}
+.detalles_factura ul li.title2 {
+  font-weight: bold;
+  background: #015a86;
+  color: #fff;
+}
+.detalles_factura ul li.uno {
+  background: #fff;
+}
+.detalles_factura ul li.dos {
+  background: #ffeee6;
+}
+.ancho_descripcion {
+  width: 380px;
+}
+.botones_envio {
+  display: inline-block;
+}
+#filtro_fac1 {
+  width: 100%;
+}
+.botones_envio {
+  float: right;
+}
+.botones_envio .font_finalizar {
+  display: block;
+}
+#ver_folio {
+  font-size: small;
+}
+#ver_folio p {
+  margin: 0;
+  padding: 0;
+}
+.agregar_observacion {
+  background: url("../images/botonbgcenter.fw.png") top repeat-x;
+  background: url("../images/botonbgleft.fw.png") left top no-repeat, url("../images/botonbgright.fw.png") right top no-repeat, url("../images/botonbgcenter.fw.png") center top repeat-x;
+  height: 24px;
+  border: 0px;
+  padding: 2px 8px 2px 8px;
+  color: #fff;
+}
+.botones {
+  display: block;
+  width: 150px;
+  margin-top: 30px;
+}
+.font_finalizar {
+  float: right;
+  margin-top: 10px;
+}
+.block {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.right {
+  float: right;
+}
+.ventana_ocultar {
+  display: none;
+}
+#agregar_registro {
+  display: block;
+}
