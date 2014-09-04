@@ -8,12 +8,19 @@
                 <div class="login">
  <?php
 if($_GET["Error"]==1)
-    echo "<h2>Error 01: Usuario ó Contraseña Invalido</h2>";
+    echo "<h2>Error 01: Usuario ó Contraseña Invalido en Sistema</h2>";
 
 if($_GET["Error"]==2)
-    echo "<h2>Error 02: Usuario no existe en servidor Mexico Team MX</h2>";
+    echo "<h2>Error 02: Usuario ó Contraseña Invalido en Active Directory</h2>";
 
- ?>
+if($_GET["Error"]==3)
+    echo "<h2>Error 03: El usuario de Active Directory no existe en el directorio del sistema</h2>";
+
+if($_GET["Error"]==4)
+    echo "<h2>Error 04: El Area del Active Directory no existe en la BD del area del sistema</h2>";
+
+
+?>
 
                </div>
             </div>

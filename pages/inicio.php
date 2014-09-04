@@ -2,40 +2,9 @@
 
 if (isset($_POST['txtUsuario'])){
    
-    //ldap
-  
-  /*  $usuario = $_POST['txtUsuario'];
-    $pass = $_POST['txtContraseña'];
-    
-                              // $usuario = 'MRT06294';
-                              // $pas = 'Rodrigo.09';
-                               $ad_host = 'mexico.tem.mx';
-                                    $ds = ldap_connect('mexico.tem.mx');
-                if (!$ds) throw new Exception('No se pudo conectar al servidor mexico.tem.mx');
-                define('LDAP_OPT_DIAGNOSTIC_MESSAGE', 0x0032);
-                ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-                ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
-                                $valor=explode('.',$ad_host);
-                                $user = $valor[0].'\\'.$usuario;
-                                $bind = ldap_bind($ds,$user,$pass);                                                                                                               
- 
-if($bind)
-*/
-
    $usuario = $_POST['txtUsuario'];
    $pass = $_POST['txtContraseña'];
-   //$usuario = 'MRT06294';
-   //$pas = 'Rodrigo.09';
-   $ldaphost = 'mexico.tem.mx';
-   $ds=ldap_connect($ldaphost);  
-   $valor=explode('.',$ldaphost);
-   $user = $valor[0].'\\'.$usuario;
  
-if ($ds) {
-          //realizando la autenticacion
-          $r=ldap_bind($ds, $user, $pass);
-          if(!$r) die("Error: Usuario y Contraseña no existen en servidor principal<br>");
-
     include("config.php");
      
     $sql ="SELECT   id_usuario, username, nombre, n_paterno, n_materno,
@@ -43,13 +12,13 @@ if ($ds) {
              FROM   users
        INNER JOIN   area
                ON   users.area_idarea = area.id_area
-            WHERE   username =  '$usuario'";
+            WHERE   username =  '$usuario'
+              AND   pass = '$pass'";
 
      $result=mysql_db_query($db, $sql, $link); 
 
     $uid = "";
      
-    //Si existe al menos una fila
     if( $fila=mysql_fetch_array($result) )
        {       
         
@@ -74,14 +43,9 @@ if ($ds) {
                 }
         
         }
-
-            else  {
-                header('Location: index.php?id=errorUsuario&Error=1');
-                    }
-
- } else {
-                echo "Error en conexion del servidor"; 
-                    }
+     else  {
+             header('Location: index.php?id=errorUsuario&Error=1');
+           }
 
 }
     else{
