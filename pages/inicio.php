@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['txtUsuario'])){
    
    $usuario = $_POST['txtUsuario'];
@@ -36,15 +35,15 @@ if (isset($_POST['txtUsuario'])){
                 $_SESSION['oper_sol']        = $fila['oper_sol'];
 
              if($fila['oper_sol']==0){
-                        header('Location: index.php?id=operador');
+                        header('Location: homepage.php?id=operador');
                 }
                 else {
-                     header('Location: index.php?id=solicitante');
+                     header('Location: homepage.php?id=solicitante');
                 }
         
         }
      else  {
-             header('Location: index.php?id=errorUsuario&Error=1');
+             header('Location: homepage.php?id=errorUsuario&Error=1');
            }
 
 }

@@ -150,7 +150,7 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 .content {
     background-image: url(../images/content.png);
     background-repeat: repeat-y;
-    padding: 20px;
+    padding: 18px;
     color: #00517A;
     font-size: 16px;
     min-height: 250px;
@@ -191,8 +191,6 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 .gridview {
     width: 100%;
     background-color: #fff;
-    /*margin: 5px 0 10px 0;*/
-    
     border-collapse: collapse;
     font-size: small;
 }
@@ -206,7 +204,6 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 
 .gridview td {
     padding: 2px;
-    b;
     color: #717171;
 }
 

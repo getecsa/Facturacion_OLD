@@ -1,6 +1,4 @@
 <?php
-session_start();
-
  //Validar que el usuario este logueado y exista un UID
 if ( ! ($_SESSION['autenticado'] == 'SI' && isset($_SESSION['uid'])) )
 {
@@ -15,9 +13,6 @@ if ( ! ($_SESSION['autenticado'] == 'SI' && isset($_SESSION['uid'])) )
 include("cliente.php");
 
 ?>
-   <div id="divNotificacion" />
-    
-        <?php include('menu.php'); ?>
 
         <div class="contenedor">
             <div class="header">
@@ -27,7 +22,7 @@ include("cliente.php");
             
             </div>
                 <div class="content">
-                    <form action="#">
+                    <form action="homepage.php?id=nueva_factura" method="post">
                         <table class="content"><tr>
   <td>Tipo de cliente: </td>
   <td>
@@ -55,15 +50,14 @@ include("cliente.php");
                                       
                                         <tr>
                                            <td>Código cliente:</td>  
-                                           <td><input type="text" value="" name="cod_cte"></td>
+                                           <td><input type="text" name="codigo_cliente" required/></td>
                                         </tr>
                                         <tr>
                                            <td></td>  
-                                           <td><input type="submit" ID="btnLogin"  value="Enviar" ></td>
+                                           <td><input type="submit" ID="btnLogin"  value="Enviar" /></td>
                                         </tr>
                                 </table>
                     </form>
 
                </div>
         </div>
-</div>

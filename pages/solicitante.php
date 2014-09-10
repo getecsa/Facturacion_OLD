@@ -1,18 +1,4 @@
- <?php
-session_start();
-
- //Validar que el usuario este logueado y exista un UID
-if ( ! ($_SESSION['autenticado'] == 'SI' && isset($_SESSION['uid'])) )
-{
-    header('location: index.php');
-}
-
-?>
-   <div id="divNotificacion" />
-    
-        <?php include('menu.php'); ?>
-
-        <div class="contenedor">
+<div class="contenedor">
             <div class="header">
                  <h1 class="h1_header">
                     <?php echo utf8_encode($_SESSION['username']);?> 
@@ -65,4 +51,3 @@ if ( ! ($_SESSION['autenticado'] == 'SI' && isset($_SESSION['uid'])) )
 
                </div>
         </div>
-</div>

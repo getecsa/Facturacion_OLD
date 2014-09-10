@@ -16,10 +16,6 @@ if($_GET["Error"]==2)
 if($_GET["Error"]==3)
     echo "<h2>Error 03: El usuario de Active Directory no existe en el directorio del sistema</h2>";
 
-if($_GET["Error"]==4)
-    echo "<h2>Error 04: El Area del Active Directory no existe en la BD del area del sistema</h2>";
-
-
 ?>
 
                </div>

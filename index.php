@@ -13,9 +13,9 @@
 </head>
 <body>
 	<div id="main">
-		<?php  include("contenido.php"); ?>
-
-
+           <div id="divNotificacion" />
+		      <?php  include("pages/inicio.php"); ?>
+            </div>
             <div class="footer">
                 <p>
                     Gestor de solicitudes de facturación. Todos los Derechos Reservados ©<br />

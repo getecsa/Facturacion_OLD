@@ -16,7 +16,7 @@ if (isset($_POST['txtUsuario'])){
     $ldaprdn = $valor[0].'\\'.$username;
 
     ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-    ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+    ldap_set_option($ldap, LDAP_OPT_REFERRALSa, 0);
 
     $bind = @ldap_bind($ldap, $ldaprdn, $password);
 
@@ -53,14 +53,10 @@ if (isset($_POST['txtUsuario'])){
             echo "<p>Puesto: ", $info[$i]["title"][0], "</p>";
             echo "<p>Area: ", $info[$i]["department"][0], "</p>";
 */
-        }
-        @ldap_close($ldap);
-    } else {
-           header('Location: index.php?id=errorUsuario&Error=2');
-    }
-    //fin active directory  
 
+            //Si existe usuario entonces loguea
 
+              
     include("config.php");
      
     $sql ="SELECT   id_usuario, username, nombre, n_paterno, n_materno,
@@ -78,63 +74,12 @@ if (isset($_POST['txtUsuario'])){
     if( $fila=mysql_fetch_array($result) )
        {       
           if($username==$fila['username'])
-             {    //valido que exista el area
-                  $area_ad=$datos_usuario[0][5];
-                  $sql ="SELECT  id_area, tx_area, oper_sol   
-                           FROM   area
-                          WHERE   tx_area =  '$area_ad'";
-
-                       $result1=mysql_db_query($db, $sql, $link); 
-
-                            if($row1=mysql_fetch_array($result1)){  //valido si el area del active directory existe en la tabla de solicitantes
+             {    
                                      
                                                                 $uid = $fila['id_usuario'];
                                                                 $id_area = $fila['id_area'];
 
-                                                                //validamos que los datos del active directory 
-                                                                //sean iguales a la base del sistema nombre, apellido, mail, area
-                                                                //volvemos a guardar los ultimos datos para iniciar.
-                       
-                                                                $nombre_ad=$datos_usuario[0][1];
-                                                                $apellido_ad=$datos_usuario[0][2];
-                                                                $mail_ad=$datos_usuario[0][3];
-                                                                $area_ad=$datos_usuario[0][5];
-
-                                                                $sql_datos="SELECT id_usuario, username, nombre, n_paterno, mail  
-                                                                              FROM   users
-                                                                             WHERE   username =  '$username'";
-                                                                $result_datos=mysql_db_query($db, $sql_datos, $link);
-
-                                                                    if($row_datos=mysql_fetch_array($result_datos)){
-
-                                                                      $id_usuario_bd=$row_datos['id_usuario'];
-                                                                      $nombre_bd=$row_datos['nombre'];
-                                                                      $apellido_bd=$row_datos['n_paterno'];
-                                                                      $mail_bd=$row_datos['mail'];
-
-                                                          
-                                                                        if($nombre_ad!=$nombre_bd){
-                                                                            $sql_name="UPDATE users 
-                                                                                          SET nombre='$nombre_ad'
-                                                                                        WHERE id_usuario='$id_usuario_bd'";
-
-                                                                          }
-
-                                                                        if($apellido_ad!=$apellido_bd){
-
-                                                                        $sql_apellido="UPDATE users 
-                                                                                          SET p_apellido='$apellido_ad'
-                                                                                        WHERE id_usuario='$id_usuario_bd'";
-
-                                                                          }
-
-                                                                        if($mail_ad!=$mail_bd){
-                                                                            hacemos un update
-                                                                          }
-
-                                                                      }
-
-                                                                session_start();  
+                                                                                  session_start();  
                                                                 $_SESSION['autenticado']    = 'SI';
                                                                 $_SESSION['uid']            = $uid;
                                                                 $_SESSION['username']       = $fila['username'];
@@ -152,11 +97,6 @@ if (isset($_POST['txtUsuario'])){
                                                                            header('Location: index.php?id=solicitante');
                                                                       }
                                      
-                              }
-                
-                            else {
-                                header('Location: index.php?id=errorUsuario&Error=4');
-                              }
             }
             else {
                 header('Location: index.php?id=errorUsuario&Error=3');
@@ -166,6 +106,17 @@ if (isset($_POST['txtUsuario'])){
     else  {
     header('Location: index.php?id=errorUsuario&Error=1');
     }
+
+
+
+
+        }
+        @ldap_close($ldap);
+    } else {
+           header('Location: index.php?id=errorUsuario&Error=2');
+    }
+    //fin active directory  
+
 
 
 }
