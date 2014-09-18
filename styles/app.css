@@ -47,39 +47,37 @@ p {
   display: inline-block;
   float: right;
 }
-.detalles_factura {
+#detalles_factura {
   font-size: small;
-  width: 100%;
+  width: 95%;
   padding: 0px;
+  margin: 0 auto;
 }
-.detalles_factura ul {
+#detalles_factura ul {
   float: left;
   margin: 0px;
   padding: 0px;
 }
-.detalles_factura ul li {
+#detalles_factura ul li {
   list-style: none;
   padding: 4px 9px;
 }
-.detalles_factura ul li.title {
+#detalles_factura ul li.title {
   font-weight: bold;
   background: #00517a;
   border-top: 1px solid #fff;
   color: #fff;
 }
-.detalles_factura ul li.title2 {
+#detalles_factura ul li.title2 {
   font-weight: bold;
-  background: #015a86;
+  background: #015a86 cho;
   color: #fff;
 }
-.detalles_factura ul li.uno {
+#detalles_factura ul li.uno {
   background: #fff;
 }
-.detalles_factura ul li.dos {
+#detalles_factura ul li.dos {
   background: #ffeee6;
-}
-.ancho_descripcion {
-  width: 400px;
 }
 .botones_envio {
   display: inline-block;
@@ -103,10 +101,11 @@ p {
 .agregar_observacion {
   background: url("../images/botonbgcenter.fw.png") top repeat-x;
   background: url("../images/botonbgleft.fw.png") left top no-repeat, url("../images/botonbgright.fw.png") right top no-repeat, url("../images/botonbgcenter.fw.png") center top repeat-x;
-  height: 23px;
+  height: 20px;
   border: 0px;
   padding: 2px 8px 2px 8px;
   color: #fff;
+  text-align: center;
 }
 .botones {
   display: block;
@@ -153,14 +152,53 @@ p {
 .formulario_n .bottom {
   margin-top: 64px;
 }
-.formulario_n .detalles_factura {
+.formulario_n #detalles_factura {
   clear: left;
-  width: 95%;
+  max-width: 920px;
   margin: 0 auto;
+  padding: 2px;
 }
-.formulario_n .detalles_factura ul li .botones {
+.formulario_n #detalles_factura table td {
+  text-align: center;
+}
+.formulario_n #detalles_factura .deta_factura li {
+  display: inline-block;
+  width: 120px;
+  min-height: 20px;
+  background: #00517a;
+  color: #fff;
+  text-align: center;
+  padding: 2px;
+  margin: 0;
+  border-top: 0.5px solid #fff;
+}
+.formulario_n #detalles_factura .deta_factura_all li {
+  display: inline-block;
+  width: 120px;
+  min-height: 20px;
+  background: #00517a;
+  color: #fff;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border-top: 0.5px solid #fff;
+}
+.formulario_n #detalles_factura .deta_factura_all li .botones {
   display: block;
   width: 100px;
   height: 20px;
   margin: 10px 0;
+}
+.sol_oculto {
+  display: none;
+}
+.ancho_descripcion {
+  width: 400px;
+}
+.boton_envio {
+  display: block;
+  margin-top: 10px;
+  height: 30px;
+  width: 100%;
+  text-align: center;
 }

@@ -50,8 +50,18 @@ include("cliente.php");
                                       
                                         <tr>
                                            <td>Código cliente:</td>  
-                                           <td><input type="text" name="codigo_cliente" required/></td>
+                                           <td><input type="text" name="codigo_cliente" required="required" required /></td>
                                         </tr>
+                                        <tr class="sol_oculto">
+                                           <td>Código cliente a afectar:</td>  
+                                           <td><input type="text" name="codigo_cliente" /></td>
+                                        </tr>                                      
+                                        <tr class="sol_oculto">
+                                           <td>Folio de la factura afectar:</td>  
+                                           <td><input type="text" name="codigo_cliente" /></td>
+                                        </tr>
+
+
                                         <tr>
                                            <td></td>  
                                            <td><input type="submit" ID="btnLogin"  value="Enviar" /></td>
