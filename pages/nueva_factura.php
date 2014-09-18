@@ -67,11 +67,11 @@ $result_moneda=mysql_db_query($db, $sql_moneda,$link);
     <tr class="add_factura">
       <td><input type="text" size="10" name="add_con[1][0]" /> </td>
       <td><input type="text" name="add_con[1][1]" /></td>
-      <td><input type="text" size="10" name="add_con[1][2]" class="calcular_subtotal" /></td>
+      <td><input type="text" size="10" name="add_con[1][2]" class="calcular_subtotal total_unidades" /></td>
       <td><input type="text" size="10" name="add_con[1][3]" class="calcular_subtotal" /></td>
       <td><input type="text" size="10" name="add_con[1][4]" disabled="true" class="suma_cargo"/></td>
       <td><input type="text" size="10" name="add_con[1][5]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_con[1][6]"  class="suma_subtotal" /></td>
+      <td><input type="text" size="10" name="add_con[1][6]" disabled="true" class="suma_subtotal" /></td>
     </tr>
     </table>
     <table class="gridview">

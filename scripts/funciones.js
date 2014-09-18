@@ -62,7 +62,7 @@ $(document).ready(function(){
                 {
                        
                             FieldCount++; 
-                            $(contenedor).append('<tr class="add_factura"><td><input type="text" size="10" name="add_con['+ FieldCount +'][0]"  placeholder="Codigo '+ FieldCount +'"/> </td><td><input type="text" name="add_con['+ FieldCount +'][1]"  placeholder="Descripcion '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][2]"  placeholder="Unidades '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][3]"  placeholder="Precio '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][4]"  placeholder="Cargo '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][5]"  placeholder="Descuento '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][6]"  class="suma_subtotal" placeholder="Subtotal '+ FieldCount +'"/><a href="#" class="eliminar">&times;</a></td></tr>');
+                            $(contenedor).append('<tr class="add_factura"><td><input type="text" size="10" name="add_con['+ FieldCount +'][0]"  placeholder="Codigo '+ FieldCount +'"/> </td><td><input type="text" name="add_con['+ FieldCount +'][1]"  placeholder="Descripcion '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][2]" class="calcular_subtotal total_unidades"  placeholder="Unidades '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][3]" class="calcular_subtotal" placeholder="Precio '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][4]" disabled="true" class="suma_cargo"  placeholder="Cargo '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][5]" class="calcular_subtotal" placeholder="Descuento '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][6]"  disabled="true" class="suma_subtotal" placeholder="Subtotal '+ FieldCount +'"/><a href="#" class="eliminar">&times;</a></td></tr>');
                             x++; 
                      
                 return false;
@@ -81,25 +81,38 @@ $(document).ready(function(){
 
  // calculamos el total de todos los grupos
 
-
+var total_sub = 0;
             //funcion para sumar en factura los subtotales
             $( "#agregar_detalle" ).click(function() {
                     
-                    
-                    $( ".calcular_subtotal" ).keyup(function() {
+                     $(".add_factura").keyup(function()
+                         {       
+                     var unidad=$(this).find("td:eq(2) > input").val();  
+                     var unitario=$(this).find("td:eq(3) > input").val(); 
+                     total_sub=unidad*unitario; 
+                     console.log(total_sub);
+                    $(this).find("td:eq(6) > input").val(total_sub);
+
+                          });
+
+
+                    $( ".calcular_subtotal" ).blur(function() {
                         var total_subtotal=0;
-                           
+                           //alert($(".suma_subtotal").val());
+                       total_subtotal = total_subtotal + total_sub;
+                       $(".total_subtotal").html(total_subtotal);
+/*
                             $(".suma_subtotal").each(function(i){
+
 
                                 var n = parseFloat(this.value);
                                 if(!isNaN(n))
                                 total_subtotal += n;
 
-                               }); console.log(total_subtotal);
-                                    $(".total_subtotal").html(total_subtotal);
+*/
+                               /*}); console.log(total_subtotal);
+                                    $(".total_subtotal").html(total_subtotal);*/
 
-
-                    
                      });
 
 

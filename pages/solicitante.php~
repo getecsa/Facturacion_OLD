@@ -1,4 +1,11 @@
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery.tablesorter.js"></script>
+<script>
+$(document).ready(function() {
+  //cuando la página se cargue convertimos la tabla con id "simple" en una tabla ordenable
+	$("#simple").tableSorter();
+});
+</script>
 <script>
 
 function enviar_parametro(valor){ 
@@ -6,9 +13,8 @@ location = location.pathname + '?id=solicitante&param=' + valor;
 // suponiendo que 'param' es el nombre como se reflejara en PHP; 
 // location.pathname hace referencia a la ruta actual, de ser necesario puedes cambiarlo a la direccion que procesara los datos en PHP; 
 } 
-
- 
 </script>
+
 
 <?php 
 
@@ -31,7 +37,7 @@ $param = $_GET['param'];
                 <div class="content">
  
                                                   <H2>Solicitudes <?php echo $param;?></H2>
-                    <table class="gridview"  id="sorter" >
+                    <table class="gridview" id="simple"   >
 <tr >
                         <td colspan="7" align="right" bgcolor="00517A"><font color="#fff">Filtro de solicitud:
                         <select id='mySelect' onchange='enviar_parametro(this.value);'>
@@ -45,11 +51,11 @@ $param = $_GET['param'];
                         
                         
                     </tr>
-
+<p></p>
                     <tr bgcolor="00517A">
-                        <th ><font color="#fff">ID</font></th>
-                        <th ><font color="#fff">Tipo de solictud</font></th>
-                        <th ><font color="#fff">Fecha Ingreso</font></th>
+                        <td ><font color="#fff">Id</font></td>
+                        <td ><font color="#fff">Tipo de solictud</font></td>
+                        <td ><font color="#fff">Fecha Ingreso</font></td>
                         
                     </tr>
                     <tr>
@@ -60,7 +66,7 @@ $param = $_GET['param'];
                        
                     </tr>
                     <tr>
-                        <td><a href="ver_folio.php?height=450&width=600" title="Folio 5324" class="thickbox"> 5325</a></td>
+                        <td><a href="ver_folio.php?height=450&width=600" title="Folio 5324" class="thickbox"> 5324</a></td>
                         <td><a href="ver_folio.php?height=450&width=600" title="Folio 5324" class="thickbox"> Nota Crédito</a></td>
                         <td><a href="ver_folio.php?height=450&width=600" title="Folio 5324" class="thickbox"> XXXXXXXXXXX</a></td>
                        
@@ -71,10 +77,3 @@ $param = $_GET['param'];
 
                </div>
         </div>
-
-<script type="text/javascript">
-var sorter=new table.sorter("sorter");
-sorter.init("sorter",1);
-</script>
-</body>
-</html>
