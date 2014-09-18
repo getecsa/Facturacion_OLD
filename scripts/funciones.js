@@ -82,6 +82,7 @@ $(document).ready(function(){
  // calculamos el total de todos los grupos
 
 var total_sub = 0;
+var total_subtotal=0;
             //funcion para sumar en factura los subtotales
             $( "#agregar_detalle" ).click(function() {
                     
@@ -97,10 +98,12 @@ var total_sub = 0;
 
 
                     $( ".calcular_subtotal" ).blur(function() {
-                        var total_subtotal=0;
+                        
                            //alert($(".suma_subtotal").val());
                        total_subtotal = total_subtotal + total_sub;
+                       console.log(total_subtotal),"ok"
                        $(".total_subtotal").html(total_subtotal);
+
 /*
                             $(".suma_subtotal").each(function(i){
 
