@@ -62,36 +62,43 @@ $(document).ready(function(){
                 {
                        
                             FieldCount++; 
-                            $(contenedor).append('<tr class="add_factura"><td><input type="text" size="10" name="add_con['+ FieldCount +'][0]"  placeholder="Codigo '+ FieldCount +'"/> </td><td><input type="text" name="add_con['+ FieldCount +'][1]"  placeholder="Descripcion '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][2]" class="calcular_subtotal total_unidades"  placeholder="Unidades '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][3]" class="calcular_subtotal" placeholder="Precio '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][4]" disabled="true" class="suma_cargo"  placeholder="Cargo '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_con['+ FieldCount +'][5]" class="calcular_subtotal" placeholder="Descuento '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_con['+ FieldCount +'][6]"  disabled="true" class="suma_subtotal" placeholder="Subtotal '+ FieldCount +'"/><a href="#" class="eliminar">&times;</a></td></tr>');
+                            $(contenedor).append('<tr class="add_factura"><td><input type="text" size="10" name="add_cont['+ FieldCount +'][0]"  placeholder="Codigo '+ FieldCount +'"/> </td><td><input type="text" name="add_cont['+ FieldCount +'][1]"  placeholder="Descripcion '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_cont['+ FieldCount +'][2]" class="calcular_subtotal total_unidades"  placeholder="Unidades '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_cont['+ FieldCount +'][3]" class="calcular_subtotal" placeholder="Precio '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_cont['+ FieldCount +'][4]" readonly class="suma_cargo"  placeholder="Cargo '+ FieldCount +'"/></td><td class="calcular_subtotal"><input type="text" size="10" name="add_cont['+ FieldCount +'][5]" class="calcular_subtotal" placeholder="Descuento '+ FieldCount +'"/></td><td><input type="text" size="10" name="add_cont['+ FieldCount +'][6]"  readonly class="suma_subtotal" placeholder="Subtotal '+ FieldCount +'"/><a href="#" class="eliminar">&times;</a></td></tr>');
+                            $("#num_concepto").val(x);
                             x++; 
                      
                 return false;
                 });
 
-
                 $("body").on("click",".eliminar", function(e){ 
-                        if( x > 1 ) {
-                                $(this).parent().parent().remove();
-                               // $(this).parent('td').remove(); 
-                                x--;
-                        }
-                return false;
-                });
+                          if( x > 1 ) {
+                                  $(this).parent().parent().remove();
+                                  x--;
+                                  $("#num_concepto").val(x-1);
+                            
+                          }
+                  return false;
+                  });
 
 
  // calculamos el total de todos los grupos
 
-var total_sub = 0;
+
+var total_cargo = 0;
+var total_sub=0;
 var total_subtotal=0;
+var descuento=0;
+
             //funcion para sumar en factura los subtotales
             $( "#agregar_detalle" ).click(function() {
-                    
+
                      $(".add_factura").keyup(function()
                          {       
                      var unidad=$(this).find("td:eq(2) > input").val();  
                      var unitario=$(this).find("td:eq(3) > input").val(); 
-                     total_sub=unidad*unitario; 
-                     console.log(total_sub);
+                     var descuento=$(this).find("td:eq(5) > input").val(); 
+                     total_cargo=unidad*unitario; 
+                     total_sub=total_cargo-descuento;
+                    $(this).find("td:eq(4) > input").val(total_cargo);
                     $(this).find("td:eq(6) > input").val(total_sub);
 
                           });
@@ -101,8 +108,12 @@ var total_subtotal=0;
                         
                            //alert($(".suma_subtotal").val());
                        total_subtotal = total_subtotal + total_sub;
-                       console.log(total_subtotal),"ok"
                        $(".total_subtotal").html(total_subtotal);
+
+                     });
+
+
+
 
 /*
                             $(".suma_subtotal").each(function(i){
@@ -116,37 +127,11 @@ var total_subtotal=0;
                                /*}); console.log(total_subtotal);
                                     $(".total_subtotal").html(total_subtotal);*/
 
-                     });
-
-
-
 
                });
-/*
-        $("#agregar_detalle").keyup(function()
-        {   
-             var importe=$(this).find("input[name=importe]").val();
-            // var importe=$(this).find("td:eq(3) > input").val();
-             var unidad=$(this).find("td:eq(2) > input").val();  
 
-           console.log(importe);
-           /*
-            var unidades=$(this).find("input[name=cantidad]").val();
-            $(this).find("[class=total]").html(parseInt(importe)*parseInt(unidades));
-            
 
-            var total=0;
-            $(".grupo .total").each(function(){
-                total=total+parseInt($(this).html());
-            })
-            $(".total .total").html(total);
-        
-            var calculo = $(this).find("td:eq(2) > input").val() * $(this).find("td:eq(5) > input").val(); 
-       
-              $(this).find("td:eq(6) > input").val(calculo)
-
-        });
-
-*/
 
 }); 
+
+//guardar datos factura

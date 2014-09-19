@@ -27,7 +27,7 @@ include("cliente.php");
   <td>Tipo de cliente: </td>
   <td>
 
-            <select id="cboClientes">
+            <select id="cboClientes" name="tipo_cliente">
                 <option value="0">Seleccione un Tipo de Cliente</option>
                 <?php
                     $clientes = obterTiposClientes();
@@ -42,7 +42,7 @@ include("cliente.php");
 
                                         <tr>
                                             <td>Tipo de documento:</td>    
-                                            <td><select id="cboDocumentos">
+                                            <td><select id="cboDocumentos" name="tipo_documento">
                                                 <option value="0">Seleccione un Documento</option>
                                                </select>
                                             </td>
