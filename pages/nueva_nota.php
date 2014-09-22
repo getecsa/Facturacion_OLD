@@ -20,10 +20,10 @@ $tipo_documento=$_POST["tipo_documento"];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva Nota de Credito</h1>
+                  <h1>Nueva nota de credito</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=nueva_factura_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=nueva_nota_pro" method="post">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" />
@@ -46,7 +46,7 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                       </select>
-                      <label for="monto_total_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="monto_total_fac_orig" id="monto_total_fac_orig"/>
+                      <label for="mt_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="mt_fac_orig" id="mt_fac_orig"/>
                       </div>
 
                       <div class="column">      
@@ -59,8 +59,8 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                         </select>
-                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" />
-                        <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc"/>
+                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" />
+                        <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc" />
                       </div>
                     
   <div id="detalles_factura">
@@ -79,9 +79,9 @@ $tipo_documento=$_POST["tipo_documento"];
       <td><input type="text" name="add_cont[1][1]" /></td>
       <td><input type="text" size="10" name="add_cont[1][2]" class="calcular_subtotal total_unidades" /></td>
       <td><input type="text" size="10" name="add_cont[1][3]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][4]" readonly class="suma_cargo"/></td>
+      <td><input type="text" size="10" name="add_cont[1][4]" readonly="readonly" class="suma_cargo"/></td>
       <td><input type="text" size="10" name="add_cont[1][5]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][6]" readonly class="suma_subtotal" /></td>
+      <td><input type="text" size="10" name="add_cont[1][6]" readonly="readonly" class="suma_subtotal" /></td>
     </tr>
     </table>
     <table class="gridview">

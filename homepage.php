@@ -29,18 +29,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles/normalize.min.css">
         <link rel="stylesheet" href="styles/main.css">
-        <script src="scripts/modernizr-2.6.2.min.js"></script>
     <link rel="shortcut icon" href="images/movistar.ico" />
     <link href="styles/style.css" rel="stylesheet" rev="stylesheet" type="text/css" />
     <link href="styles/style1.css" rel="stylesheet" rev="stylesheet" type="text/css" />
     <link href="styles/app.css" rel="stylesheet" rev="stylesheet" type="text/css" />   
+    <link rel="stylesheet" href="styles/thickbox.css" type="text/css" media="screen" /> 
+    <link rel="stylesheet" type="text/css" href="styles/jquery-ui.css">     
+    <script src="scripts/modernizr-2.6.2.min.js"></script>
     <script src="scripts/jquery-1.8.0.min.js" type="text/javascript"></script>
     <script src="scripts/default.js" type="text/javascript"></script>   
     <script src="scripts/funciones.js" type="text/javascript"></script>   
     <script type="text/javascript" src="scripts/thickbox.js"></script>
-    <link rel="stylesheet" href="styles/thickbox.css" type="text/css" media="screen" /> 
- <!--   <script type="text/javascript" src="scripts/jquery-latest.js"></script> 
-<script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>  -->
+    <script type="text/javascript" src="scripts/jquery-ui.js"></script>
+    <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
+
+
 </head>
 <body>
     <div id="main">

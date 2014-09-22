@@ -83,20 +83,20 @@ $id_usuario=$_SESSION['uid'];
 
       }
 
-	if(isset($_POST["submit"])) {
-	
-	$array_cont=$_POST["add_cont"];	
-	$num_concepto=$_POST['num_concepto'];
-	$cod_cliente=$_POST['cod_cliente'];
-	$motivo_sol=$_POST['motivo_sol'];
-	$dias_ven=$_POST['dias_ven'];
-	$leyenda_doc=$_POST['leyenda_doc'];
-	$iva=$_POST["iva"];
-	$leyenda_mat=$_POST['leyenda_mat'];
-	$razon_social=$_POST['razon_social'];
-	$compa_fac=$_POST['compa_fac'];
-	$moneda=$_POST['moneda'];
-	$salida=$_POST['salida'];
+  if(isset($_POST["submit"])) {
+  
+  $array_cont=$_POST["add_cont"]; 
+  $num_concepto=$_POST['num_concepto'];
+  $cod_cliente=$_POST['cod_cliente'];
+  $motivo_sol=$_POST['motivo_sol'];
+  $dias_ven=$_POST['dias_ven'];
+  $leyenda_doc=$_POST['leyenda_doc'];
+  $iva=$_POST["iva"];
+  $leyenda_mat=$_POST['leyenda_mat'];
+  $razon_social=$_POST['razon_social'];
+  $compa_fac=$_POST['compa_fac'];
+  $moneda=$_POST['moneda'];
+  $salida=$_POST['salida'];
   $tipo_cliente=$_POST['tipo_cliente'];
   $tipo_documento=$_POST['tipo_documento'];
 
