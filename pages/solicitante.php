@@ -1,27 +1,27 @@
 <?php 
-error_reporting(E_ALL ^ E_NOTICE);	
-	include("conectar_bd.php");
-	session_start();
- 	$id_user = $_SESSION['uid'];
-	
-		
-		if(isset($_POST['form_1']))
-				{
-						$id = $_POST['id'];
-						$comentario = $_POST['comentario'];
+error_reporting(E_ALL ^ E_NOTICE);  
+    include("conectar_bd.php");
+    session_start();
+    $id_user = $_SESSION['uid'];
+    
+        
+        if(isset($_POST['form_1']))
+                {
+                        $id = $_POST['id'];
+                        $comentario = $_POST['comentario'];
 
 
-						$insert = "INSERT INTO observaciones(  `observacion` ,  `fecha_observacion` ,  `users_id_usuario` ,  `solicitudes_id_solicitudes` )
- 								VALUES ( '$comentario', now(), '$id_user', '$id')";
+                        $insert = "INSERT INTO observaciones(  `observacion` ,  `fecha_observacion` ,  `users_id_usuario` ,  `solicitudes_id_solicitudes` )
+                                VALUES ( '$comentario', now(), '$id_user', '$id')";
 
-						mysqli_query($con, $insert);
-				}	
+                        mysqli_query($con, $insert);
+                }   
 
-		if($_GET['param'] == '')
-				{$param = 'Pendiente';}
-		else {
-			$param = $_GET['param'];
-		}
+        if($_GET['param'] == '')
+                {$param = 'Pendiente';}
+        else {
+            $param = $_GET['param'];
+        }
 ?>
 <script>
 function enviar_parametro(valor){ 
@@ -63,23 +63,45 @@ location = location.pathname + '?id=solicitante&param=' + valor;
                         
                     </tr>
 <?php 
+//Si el estado esta en proceso para el solicitante
 
+if ($param=='Pendiente'){
+$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+       WHERE so.users_id_usuario='$id_user'
+         AND so.estado_actual=0 || so.estado_actual=1 || so.estado_actual=2 || so.estado_actual=3 ||
+             so.estado_actual=5 || so.estado_actual=6";
+}
 
-$sql = "SELECT s.id_solicitudes, td.tipo_doc, date(s.fecha_solicitud) as fecha
-FROM solicitudes s, documento d, historial_estados he, tipo_documento td
-WHERE s.id_solicitudes = d.solicitudes_idSolicitudes
-AND s.id_solicitudes = he.solicitudes_idSolicitudes
-AND d.tipo_documento_idtipo_doc = td.id_tipo_doc
-AND s.`users_id_usuario` = '$id_user'
-AND he.estado_solicitud_idestado_solicitud=0 || he.estado_solicitud_idestado_solicitud=1 || he.estado_solicitud_idestado_solicitud=2
-|| he.estado_solicitud_idestado_solicitud=5 || he.estado_solicitud_idestado_solicitud=6";
+if ($param=='Rechazada'){
+$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+       WHERE so.users_id_usuario='$id_user'
+         AND so.estado_actual=4";
 
+}
 
+if ($param=='Aceptada'){
+$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+       WHERE so.users_id_usuario='$id_user'
+         AND so.estado_actual=7";
+
+}
 
 if ($rs = mysqli_query($con, $sql)) {
-	/* fetch array asociativo*/
+    /* fetch array asociativo*/
 while ($fila = mysqli_fetch_assoc($rs)) {
-		
+        
 ?>
 
                     <tr>
@@ -90,7 +112,7 @@ while ($fila = mysqli_fetch_assoc($rs)) {
                        
                     </tr>
 <?php }
-}		
+}       
 ?>
                     
             </table>

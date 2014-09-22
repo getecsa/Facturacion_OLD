@@ -83,20 +83,6 @@ $id_usuario=$_SESSION['uid'];
 
       }
 
-
- if(isset($_POST["submit_return"])) {    
-
-if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
-
-    header('Location: homepage.php?id=nueva_factura');
-
-}
-
-echo "Entro a Return"; 
-
-}
-
-
   if(isset($_POST["submit"])) {
   
   $array_cont=$_POST["add_cont"]; 
@@ -249,13 +235,20 @@ echo "Entro a Return";
    <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
    <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
    <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">                 
-   
+
+
                     <input type="submit" id="submit" name="submit_pro" value="Enviar" >
-                    <input type="submit" id="submit" name="submit_return" value="Regresar	" >
+            
                   </div>
 
         </form>
 <?php } ?>
+
+<form class="formulario_n" action="homepage.php?id=nueva_factura" method="post">
+				 <div class="boton_envio">
+							 	 <input type="submit" id="submit" name="submit_pro" value="Regresar" >
+				</div>
+</form>					
           </div>
         </div>
  </div>   
