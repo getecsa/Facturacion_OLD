@@ -159,6 +159,9 @@ p {
 .formulario_n .bottom {
   margin-top: 64px;
 }
+.formulario_n .bottom_nc {
+  margin-top: 30px;
+}
 .formulario_n #detalles_factura {
   clear: left;
   max-width: 920px;

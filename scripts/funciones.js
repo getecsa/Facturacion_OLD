@@ -48,6 +48,25 @@ $(document).ready(function(){
 
     });
 
+    //funcion para action solicitud
+    $("#cboDocumentos").change(function() {
+         var documentos = $(this).val();
+            if(documentos==1){
+              $('#nueva_solicitud').attr('action', 'homepage.php?id=nueva_factura');
+            }
+
+            if(documentos==2){
+              $('#nueva_solicitud').attr('action', 'homepage.php?id=nueva_nota');
+            }
+
+            if(documentos==3){
+              $('#nueva_solicitud').attr('action', 'homepage.php?id=refactura_con_cambio');
+            }
+
+            if(documentos==4){
+              $('#nueva_solicitud').attr('action', 'homepage.php?id=refactura_sin_cambio');
+            }
+    });
 
     //funcion para agregar en facturacion
 
@@ -131,7 +150,4 @@ var descuento=0;
                });
 
 
-
 }); 
-
-//guardar datos factura

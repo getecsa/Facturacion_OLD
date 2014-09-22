@@ -22,7 +22,7 @@ include("cliente.php");
             
             </div>
                 <div class="content">
-                    <form action="homepage.php?id=nueva_factura" method="post">
+                    <form action="homepage.php?id=nueva_factura" method="post" id="nueva_solicitud">
                         <table class="content"><tr>
   <td>Tipo de cliente: </td>
   <td>
@@ -54,17 +54,17 @@ include("cliente.php");
                                         </tr>
                                         <tr class="sol_oculto">
                                            <td>Código cliente a afectar:</td>  
-                                           <td><input type="text" name="codigo_cliente" /></td>
+                                           <td><input type="text" name="codigo_cliente_afectar" /></td>
                                         </tr>                                      
                                         <tr class="sol_oculto">
                                            <td>Folio de la factura afectar:</td>  
-                                           <td><input type="text" name="codigo_cliente" /></td>
+                                           <td><input type="text" name="folio_factura_afectar" /></td>
                                         </tr>
 
 
                                         <tr>
                                            <td></td>  
-                                           <td><input type="submit" ID="btnLogin"  value="Enviar" /></td>
+                                           <td><input type="submit" id="Enviar" name="Enviar" value="Enviar" /></td>
                                         </tr>
                                 </table>
                     </form>

@@ -20,7 +20,7 @@ $tipo_documento=$_POST["tipo_documento"];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva Factura</h1>
+                  <h1>Nueva Nota de Credito</h1>
               </div>
   <div class="content">
                   <form class="formulario_n" action="homepage.php?id=nueva_factura_pro" method="post">
@@ -28,10 +28,16 @@ $tipo_documento=$_POST["tipo_documento"];
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" />
                         <label for="motivo_sol">Motivo de solicitud:</label><input type="text" name="motivo_sol" id="motivo_sol"/>
-                        <label for="dias_ven">Días de vencimiento:</label><input type="text" name="dias_ven" id="dias_ven" />
                         <label for="leyenda_doc">Leyenda del documento:</label><input type="text" name="leyenda_doc" id="leyenda_doc"/>
+                        <label for="folio_fac_origen">Folio factura origen:</label><input type="text" name="folio_fac_origen" id="folio_fac_origen" />
                       </div>  
-                      <div class="column bottom">   
+                      <div class="column bottom_nc">   
+                      <label for="tipo_nc">Tipo Nota Credito:</label>
+                      <select name="tipo_nc">
+                        <option>Seleccione Tipo</option>
+                        <option>Parcial</option>
+                        <option>Total</option>
+                      </select>
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
                           <?php 
@@ -40,12 +46,11 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                       </select>
-                      <label for="leyenda_mat">Leyenda Material:</label><input type="text" name="leyenda_mat" id="leyenda_mat"/>
+                      <label for="monto_total_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="monto_total_fac_orig" id="monto_total_fac_orig"/>
                       </div>
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><input type="text" name="razon_social" id="razon_social"/>
-                        <label for="compa_fac">Compañia facturadora:</label><input type="text" name="compa_fac" id="compa_fac" />
                         <label for="moneda">Moneda:</label>
                         <select name="moneda">
                           <?php 
@@ -54,9 +59,8 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                         </select>
-
-
-                        <label for="salida">Salida:</label><input type="text" name="salida" id="salida"/>
+                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" />
+                        <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc"/>
                       </div>
                     
   <div id="detalles_factura">
