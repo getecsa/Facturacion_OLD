@@ -34,7 +34,7 @@ $id_area=$_SESSION['area'];
 $id_usuario=$_SESSION['uid'];
 
 
- $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',1)";
+ $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
@@ -237,11 +237,30 @@ $id_usuario=$_SESSION['uid'];
    <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">                 
    
                     <input type="submit" id="submit" name="submit_pro" value="Enviar" >
-                    <input type="reset" value="Borrar" >
+     </form>
+<?php $data = serialize($array_cont);
+$order = htmlentities($data);
+?>
+     <form action="homepage.php?id=nueva_factura" method="POST">
+   <input  type="hidden" id="array_cont" name="array_cont" value="<?php echo $order; ?>">
+   <input  type="hidden" id="num_concepto" name="num_concepto" value="<?php echo $num_concepto; ?>">                  
+   <input  type="hidden" id="cod_cliente" name="cod_cliente" value="<?php echo $cod_cliente; ?>">                  
+   <input  type="hidden" id="motivo_sol" name="motivo_sol" value="<?php echo $motivo_sol; ?>">                  
+   <input  type="hidden" id="dias_ven" name="dias_ven" value="<?php echo $dias_ven; ?>">                  
+   <input  type="hidden" id="leyenda_doc" name="leyenda_doc" value="<?php echo $leyenda_doc; ?>">                  
+   <input  type="hidden" id="razon_social" name="razon_social" value="<?php echo $razon_social; ?>">                  
+   <input  type="hidden" id="compa_fac" name="compa_fac" value="<?php echo $compa_fac; ?>">                  
+   <input  type="hidden" id="moneda" name="moneda" value="<?php echo $moneda; ?>">                  
+   <input  type="hidden" id="salida" name="salida" value="<?php echo $salida; ?>">                  
+   <input  type="hidden" id="tipo_cliente" name="tipo_cliente" value="<?php echo $tipo_cliente; ?>">                  
+   <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
+   <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
+   <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">  
+                    <input type="submit" value="Regresar" name="submit_return" >
                   </div>
 
         </form>
 <?php } ?>
           </div>
         </div>
- </div>   
+ </div>   	

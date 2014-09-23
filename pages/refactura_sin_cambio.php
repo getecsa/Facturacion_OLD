@@ -7,7 +7,7 @@ $result_iva=mysql_db_query($db, $sql_iva,$link);
 $sql_moneda="select * from moneda";
 $result_moneda=mysql_db_query($db, $sql_moneda,$link);
 
-if( (!isset($_POST["tipo_cliente"])) || (!isset($_POST["tipo_documento"]))  ){
+if( (!isset($_POST["tipo_cliente"])) || (!isset($_POST["tipo_documento"])) ){
 
     header('Location: homepage.php?id=nueva_solicitud');
 }
@@ -20,24 +20,30 @@ $tipo_documento=$_POST["tipo_documento"];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva nota de credito</h1>
+                  <h1>Nueva Refactura con cambio</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=nueva_nota_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=refactura_con_cambio_pro" method="post">
                     <fieldset>
                       <div class="column">
-                        <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" />
+                        <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" readonly="readonly" />
                         <label for="motivo_sol">Motivo de solicitud:</label><input type="text" name="motivo_sol" id="motivo_sol"/>
                         <label for="leyenda_doc">Leyenda del documento:</label><input type="text" name="leyenda_doc" id="leyenda_doc"/>
-                        <label for="folio_fac_origen">Folio factura origen:</label><input type="text" name="folio_fac_origen" id="folio_fac_origen" />
+                        <label for="dias_ven">Dias de vencimiento:</label><input type="text" name="dias_ven" id="dias_ven"/>
+                        <label for="codigo_cliente_afectar">Codigo C.(Fac. Afectar):</label><input type="text" name="codigo_cliente_afectar" id="codigo_cliente_afectar" value="<?php echo $_POST['codigo_cliente_afectar']; ?>" readonly="readonly" />
+                        <label for="fecha_emision_nc">Fecha Emision NC:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" />
+                       
                       </div>  
                       <div class="column bottom_nc">   
-                      <label for="tipo_nc">Tipo Nota Credito:</label>
-                      <select name="tipo_nc">
-                        <option>Seleccione Tipo</option>
-                        <option>Parcial</option>
-                        <option>Total</option>
-                      </select>
+                      <label for="moneda">Moneda:</label>
+                        <select name="moneda">
+                          <?php 
+                            while($row=mysql_fetch_array($result_moneda)){
+                            echo "<option value='",$row['id_moneda'],"'>",$row['moneda'],"</option>";
+                              }
+                          ?>
+                        </select>
+
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
                           <?php 
@@ -46,21 +52,20 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                       </select>
-                      <label for="mt_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="mt_fac_orig" id="mt_fac_orig"/>
+                      <label for="folio_fac_origen">Folio factura origen:</label><input type="text" name="folio_fac_origen" id="folio_fac_origen" value="<?php echo $_POST['folio_factura_afectar']; ?>" readonly="readonly" />
+                      <label for="folio_nc">Folio NC:</label><input type="text" name="folio_nc" id="folio_nc"/>
+                      <label for="fecha_emision_nc2">Fecha Emision Fac. Origen:</label><input type="text" name="fecha_emision_fac_or" id="fecha_emision_nc2" readonly="readonly" />
+                       
                       </div>
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><input type="text" name="razon_social" id="razon_social"/>
-                        <label for="moneda">Moneda:</label>
-                        <select name="moneda">
-                          <?php 
-                            while($row=mysql_fetch_array($result_moneda)){
-                            echo "<option value='",$row['id_moneda'],"'>",$row['moneda'],"</option>";
-                              }
-                          ?>
-                        </select>
-                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" />
+                        <label for="entrada">Entrada:</label><input type="text" name="entrada" id="entrada" />
+                        <label for="motivo_nc">Motivo NC:</label><input type="text" name="motivo_nc" id="motivo_nc" />
+                        <label for="mt_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="mt_fac_orig" id="mt_fac_orig"/>
                         <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc" />
+                        <label for="importe_total">Importe total:</label><input type="text" name="importe_total" id="importe_total" />
+                        
                       </div>
                     
   <div id="detalles_factura">

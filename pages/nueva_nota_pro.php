@@ -34,7 +34,7 @@ $id_area=$_SESSION['area'];
 $id_usuario=$_SESSION['uid'];
 
 
- $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',1)";
+ $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
@@ -42,26 +42,7 @@ $id_usuario=$_SESSION['uid'];
         
             $query="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) VALUES (now(),0,'".$id_solicitud."','".$id_usuario."','".$id_area."')";
             $result0=$mysqli->query($query);
-/*
 
-                            $array_cont=$_POST["array_cont"];  
-                            $num_concepto=$_POST['num_concepto'];
-                          $cod_cliente=$_POST['cod_cliente'];
-                          $motivo_sol=$_POST['motivo_sol'];
-                          $folio_fac_origen=$_POST['folio_fac_origen'];
-                          $leyenda_doc=$_POST['leyenda_doc'];
-                          $tipo_nc=$_POST['tipo_nc'];
-                          $iva=$_POST["iva"];
-                            $mt_fac_orig=$_POST['mt_fac_orig'];
-                            $fecha_emision_nc=$_POST['fecha_emision_nc'];
-                          $razon_social=$_POST['razon_social'];
-                            $monto_afectar_nc=$_POST['monto_afectar_nc'];
-                          $moneda=$_POST['moneda'];
-                            $tipo_cliente=$_POST['tipo_cliente'];
-                          $tipo_documento=$_POST['tipo_documento'];
-                            $id_area=$_SESSION['area'];
-                            $id_usuario=$_SESSION['uid'];
-*/
             if($result0){        
                         $query="INSERT INTO documento (id_codigo_cliente,tipo_nc,leyenda_doc,IVA_idIVA,Moneda_idMoneda,tipo_documento_idtipo_doc,solicitudes_idSolicitudes,razon_social,motivos,folio_fac_origen,monto_total_fac_orig,monto_afectar_nc,fecha_emision_nc) VALUES ('".$cod_cliente."','".$tipo_nc."','".$leyenda_doc."','".$iva."','".$moneda."','".$tipo_documento."','". $id_solicitud."','".$razon_social."','".$motivo_sol."','".$folio_fac_origen."','".$mt_fac_orig."','".$monto_afectar_nc."','".$fecha_emision_nc."')";
                         $result1=$mysqli->query($query);

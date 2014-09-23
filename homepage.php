@@ -55,6 +55,7 @@
                         } else {
                             include("pages/".$_GET['id'].".php");
                         }
+                        
                     ?>
 
             </div>

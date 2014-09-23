@@ -74,7 +74,7 @@ $(document).ready(function(){
                 var AddButton       = $("#agregar_campo_fac"); 
                
                 var x = $("#agregar_detalle").length + 1;
-              
+                
                 var FieldCount = x-1; 
 
                 $(AddButton).click(function (e)  
@@ -175,7 +175,9 @@ var descuento=0;
            
           $(document).ready(function() {
              $("#fecha_emision_nc").datepicker();
+             $("#fecha_emision_nc2").datepicker();
            });
 //fin funcion fecha
 
 }); 
+

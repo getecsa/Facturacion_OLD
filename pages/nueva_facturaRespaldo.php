@@ -20,24 +20,18 @@ $tipo_documento=$_POST["tipo_documento"];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva nota de credito</h1>
+                  <h1>Nueva Factura</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=nueva_nota_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=nueva_factura_pro" method="post">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" />
                         <label for="motivo_sol">Motivo de solicitud:</label><input type="text" name="motivo_sol" id="motivo_sol"/>
+                        <label for="dias_ven">Días de vencimiento:</label><input type="text" name="dias_ven" id="dias_ven" />
                         <label for="leyenda_doc">Leyenda del documento:</label><input type="text" name="leyenda_doc" id="leyenda_doc"/>
-                        <label for="folio_fac_origen">Folio factura origen:</label><input type="text" name="folio_fac_origen" id="folio_fac_origen" />
                       </div>  
-                      <div class="column bottom_nc">   
-                      <label for="tipo_nc">Tipo Nota Credito:</label>
-                      <select name="tipo_nc">
-                        <option>Seleccione Tipo</option>
-                        <option>Parcial</option>
-                        <option>Total</option>
-                      </select>
+                      <div class="column bottom">   
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
                           <?php 
@@ -46,11 +40,12 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                       </select>
-                      <label for="mt_fac_orig">Monto Total (Fac Origen):</label><input type="text" name="mt_fac_orig" id="mt_fac_orig"/>
+                      <label for="leyenda_mat">Leyenda Material:</label><input type="text" name="leyenda_mat" id="leyenda_mat"/>
                       </div>
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><input type="text" name="razon_social" id="razon_social"/>
+                        <label for="compa_fac">Compañia facturadora:</label><input type="text" name="compa_fac" id="compa_fac" />
                         <label for="moneda">Moneda:</label>
                         <select name="moneda">
                           <?php 
@@ -59,8 +54,9 @@ $tipo_documento=$_POST["tipo_documento"];
                               }
                           ?>
                         </select>
-                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" />
-                        <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc" />
+
+
+                        <label for="salida">Salida:</label><input type="text" name="salida" id="salida"/>
                       </div>
                     
   <div id="detalles_factura">
@@ -79,9 +75,9 @@ $tipo_documento=$_POST["tipo_documento"];
       <td><input type="text" name="add_cont[1][1]" /></td>
       <td><input type="text" size="10" name="add_cont[1][2]" class="calcular_subtotal total_unidades" /></td>
       <td><input type="text" size="10" name="add_cont[1][3]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][4]" readonly="readonly" class="suma_cargo"/></td>
+      <td><input type="text" size="10" name="add_cont[1][4]" readonly class="suma_cargo"/></td>
       <td><input type="text" size="10" name="add_cont[1][5]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][6]" readonly="readonly" class="suma_subtotal" /></td>
+      <td><input type="text" size="10" name="add_cont[1][6]" readonly class="suma_subtotal" /></td>
     </tr>
     </table>
     <table class="gridview">
