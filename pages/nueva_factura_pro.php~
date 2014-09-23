@@ -86,7 +86,15 @@ $id_usuario=$_SESSION['uid'];
   if(isset($_POST["submit"])) {
   
   $array_cont=$_POST["add_cont"]; 
-  $num_concepto=$_POST['num_concepto']+$_POST['num_concepto2'];
+  
+   if(isset($_POST["num_concepto2"])){
+   	$num_concepto=$_POST['num_concepto']-1+$_POST['num_concepto2'];
+   	echo "Nuevos conceptos".($_POST['num_concepto']-1).'+ Conceptos arrastrando'.$_POST['num_concepto2'];
+   	echo "--".$num_concepto;
+   	}
+  else {
+  $num_concepto=$_POST['num_concepto'];
+  }
   $cod_cliente=$_POST['cod_cliente'];
   $motivo_sol=$_POST['motivo_sol'];
   $dias_ven=$_POST['dias_ven'];
@@ -99,7 +107,7 @@ $id_usuario=$_SESSION['uid'];
   $salida=$_POST['salida'];
   $tipo_cliente=$_POST['tipo_cliente'];
   $tipo_documento=$_POST['tipo_documento'];
-echo $num_concepto;
+
 ?>
   <form class="formulario_n" action="#" method="post">
                     <fieldset>
@@ -151,7 +159,7 @@ echo $num_concepto;
     </tr>
     <?php
     $subtotal=0;
-    for($i=1;$i<=$num_concepto;$i++){
+    for($i=1;$i<=5;$i++){
     $subtotal=$subtotal+$array_cont[$i][6];
     ?>
     <tr class="add_factura">

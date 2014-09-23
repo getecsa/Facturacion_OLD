@@ -20,10 +20,10 @@ $tipo_documento=$_POST["tipo_documento"];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva Refactura con cambio</h1>
+                  <h1>Nueva Refactura sin cambio</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=refactura_con_cambio_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=refactura_sin_cambio_pro" method="post">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" value="<?php echo $_POST['codigo_cliente'];?>" readonly="readonly" />

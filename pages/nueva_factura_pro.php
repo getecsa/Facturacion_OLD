@@ -86,7 +86,15 @@ $id_usuario=$_SESSION['uid'];
   if(isset($_POST["submit"])) {
   
   $array_cont=$_POST["add_cont"]; 
+  
+   if(isset($_POST["num_concepto2"])){
+   	$num_concepto=$_POST['num_concepto']-1+$_POST['num_concepto2'];
+   	echo "Nuevos conceptos".($_POST['num_concepto']-1).'+ Conceptos arrastrando'.$_POST['num_concepto2'];
+   	echo "--".$num_concepto;
+   	}
+  else {
   $num_concepto=$_POST['num_concepto'];
+  }
   $cod_cliente=$_POST['cod_cliente'];
   $motivo_sol=$_POST['motivo_sol'];
   $dias_ven=$_POST['dias_ven'];

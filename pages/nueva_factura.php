@@ -105,7 +105,7 @@ $id_usuario=$_SESSION['uid'];
     </tr>
      
       <?php
-      echo $num_concepto;
+     
     $subtotal=0;
     for($i=1;$i<=$num_concepto;$i++){
     $subtotal=$subtotal+$array_cont[$i][6];
@@ -163,6 +163,7 @@ $id_usuario=$_SESSION['uid'];
   </table> 
         </fieldset>
                    <div class="boton_envio">
+                    <input  type="hidden" id="num_concepto2" value="<?php  echo $num_concepto; ?>" name="num_concepto2">
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
                     <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">

@@ -103,24 +103,16 @@ $id_usuario=$_SESSION['uid'];
       <td>Descuento</td>
       <td>Subtotal</td>
     </tr>
-     <tr class="add_factura">
-      <td><input type="text" size="10" name="add_cont[1][0]" /> </td>
-      <td><input type="text" name="add_cont[1][1]" /></td>
-      <td><input type="text" size="10" name="add_cont[1][2]" class="calcular_subtotal total_unidades" /></td>
-      <td><input type="text" size="10" name="add_cont[1][3]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][4]" readonly class="suma_cargo"/></td>
-      <td><input type="text" size="10" name="add_cont[1][5]" class="calcular_subtotal" /></td>
-      <td><input type="text" size="10" name="add_cont[1][6]" readonly class="suma_subtotal" /></td>
-    </tr>
+     
       <?php
-      echo $num_concepto;
+     
     $subtotal=0;
     for($i=1;$i<=$num_concepto;$i++){
     $subtotal=$subtotal+$array_cont[$i][6];
     ?>
   
     <tr class="add_factura">
-      <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][0]" value="<?php echo $array_cont[$i][0]; ?>"/> </td>
+      <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][0]" value="<?php echo htmlentities(serialize($array_cont[$i][0])); ?>"/> </td>
       <td><input type="text" name="add_cont[<?php echo $i; ?>][1]" value="<?php echo $array_cont[$i][1]; ?>" /></td>
       <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][2]" class="calcular_subtotal total_unidades" value="<?php echo $array_cont[$i][2]; ?>" /></td>
       <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][3]" class="calcular_subtotal" value="<?php echo $array_cont[$i][3]; ?>" /></td>
@@ -171,6 +163,7 @@ $id_usuario=$_SESSION['uid'];
   </table> 
         </fieldset>
                    <div class="boton_envio">
+                    <input  type="hidden" id="num_concepto2" value="<?php  echo $num_concepto; ?>" name="num_concepto2">
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
                     <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">
