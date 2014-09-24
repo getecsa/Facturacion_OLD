@@ -86,15 +86,13 @@ $id_usuario=$_SESSION['uid'];
   if(isset($_POST["submit"])) {
   
   $array_cont=$_POST["add_cont"]; 
-  
-   if(isset($_POST["num_concepto2"])){
-   	$num_concepto=$_POST['num_concepto']-1+$_POST['num_concepto2'];
-   	echo "Nuevos conceptos".($_POST['num_concepto']-1).'+ Conceptos arrastrando'.$_POST['num_concepto2'];
-   	echo "--".$num_concepto;
-   	}
-  else {
   $num_concepto=$_POST['num_concepto'];
-  }
+
+  if($_POST['return']==1){
+  $num_return=$_POST['num_return'];
+  $num_concepto=$num_concepto+$num_return-1;
+    }
+
   $cod_cliente=$_POST['cod_cliente'];
   $motivo_sol=$_POST['motivo_sol'];
   $dias_ven=$_POST['dias_ven'];
@@ -109,7 +107,7 @@ $id_usuario=$_SESSION['uid'];
   $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post">
+  <form class="formulario_n" action="#" method="post" id="nueva_factura">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $cod_cliente;?></p>
@@ -245,29 +243,9 @@ $id_usuario=$_SESSION['uid'];
    <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">                 
    
                     <input type="submit" id="submit" name="submit_pro" value="Enviar" >
+                    <input type="submit" value="Regresar" name="submit_return" id="submit_return_nf" >
      </form>
-<?php $data = serialize($array_cont);
-$order = htmlentities($data);
-?>
-     <form action="homepage.php?id=nueva_factura" method="POST">
-   <input  type="hidden" id="array_cont" name="array_cont" value="<?php echo $order; ?>">
-   <input  type="hidden" id="num_concepto" name="num_concepto" value="<?php echo $num_concepto; ?>">                  
-   <input  type="hidden" id="cod_cliente" name="cod_cliente" value="<?php echo $cod_cliente; ?>">                  
-   <input  type="hidden" id="motivo_sol" name="motivo_sol" value="<?php echo $motivo_sol; ?>">                  
-   <input  type="hidden" id="dias_ven" name="dias_ven" value="<?php echo $dias_ven; ?>">                  
-   <input  type="hidden" id="leyenda_doc" name="leyenda_doc" value="<?php echo $leyenda_doc; ?>">                  
-   <input  type="hidden" id="razon_social" name="razon_social" value="<?php echo $razon_social; ?>">                  
-   <input  type="hidden" id="compa_fac" name="compa_fac" value="<?php echo $compa_fac; ?>">                  
-   <input  type="hidden" id="moneda" name="moneda" value="<?php echo $moneda; ?>">                  
-   <input  type="hidden" id="salida" name="salida" value="<?php echo $salida; ?>">                  
-   <input  type="hidden" id="tipo_cliente" name="tipo_cliente" value="<?php echo $tipo_cliente; ?>">                  
-   <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
-   <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
-   <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">  
-                    <input type="submit" value="Regresar" name="submit_return" >
-                  </div>
 
-        </form>
 <?php } ?>
           </div>
         </div>

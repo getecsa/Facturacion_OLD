@@ -21,6 +21,7 @@ $result_moneda1=mysql_db_query($db, $sql_moneda,$link);
 
 $array_cont=unserialize($_POST["array_cont"]);
 $num_concepto=$_POST['num_concepto'];
+$num_concepto2=$num_concepto;
 $cod_cliente=$_POST['cod_cliente'];
 $motivo_sol=$_POST['motivo_sol'];
 $dias_ven=$_POST['dias_ven'];
@@ -112,7 +113,7 @@ $id_usuario=$_SESSION['uid'];
     ?>
   
     <tr class="add_factura">
-      <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][0]" value="<?php echo htmlentities(serialize($array_cont[$i][0])); ?>"/> </td>
+      <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][0]" value="<?php echo $array_cont[$i][0]; ?>"/> </td>
       <td><input type="text" name="add_cont[<?php echo $i; ?>][1]" value="<?php echo $array_cont[$i][1]; ?>" /></td>
       <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][2]" class="calcular_subtotal total_unidades" value="<?php echo $array_cont[$i][2]; ?>" /></td>
       <td><input type="text" size="10" name="add_cont[<?php echo $i; ?>][3]" class="calcular_subtotal" value="<?php echo $array_cont[$i][3]; ?>" /></td>
@@ -163,7 +164,7 @@ $id_usuario=$_SESSION['uid'];
   </table> 
         </fieldset>
                    <div class="boton_envio">
-                    <input  type="hidden" id="num_concepto2" value="<?php  echo $num_concepto; ?>" name="num_concepto2">
+                    <input  type="hidden" id="num_concepto2" value="<?php  echo $num_concepto2; ?>" name="num_concepto2">
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
                     <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">

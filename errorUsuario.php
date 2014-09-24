@@ -1,9 +1,4 @@
 <?php
-session_start();
- //Validar que el usuario este logueado y exista un UID
-if (($_SESSION['autenticado'] == 'SI' &&  isset($_SESSION['oper_sol'])) )
-{
-
 
 /*if (strstr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
 {
@@ -52,19 +47,34 @@ if (($_SESSION['autenticado'] == 'SI' &&  isset($_SESSION['oper_sol'])) )
 
 </head>
 <body>
-    <div id="main">
-           <div id="divNotificacion" />
-                    <?php include('menu.php'); ?>
-                    <?php
-                        if (!isset($_GET['id'])) {
-                            include("pages/panel.php");
-                        } else {
-                            include("pages/".$_GET['id'].".php");
-                        }
-                        
-                    ?>
+     <div id="main">
+                <div id="divNotificacion" />
+                <div class="contenedor">
+                            <div class="header">
+                                <img alt="Movistar" class="logotipo" src="images/logo.png" />
+                                <h1></h1>
+                            </div>
+                            <div class="content">
+                                <div class="login">
+                 <?php
+                if($_GET["Error"]==1)
+                    echo "<h2>Error 01: Usuario ó Contraseña Invalido en Sistema</h2>";
 
-            </div>
+                if($_GET["Error"]==2)
+                    echo "<h2>Error 02: Usuario ó Contraseña Invalido en Active Directory</h2>";
+
+                if($_GET["Error"]==3)
+                    echo "<h2>Error 03: El usuario de Active Directory no existe en el directorio del sistema</h2>";
+
+                if($_GET["Error"]==4)
+                    echo "<h2>Error 04: El usuario no esta autentificado</h2>";
+
+                ?>
+
+                               </div>
+                            </div>
+                </div>
+                </div>
             <div class="footer">
                 <p>
                     Gestor de solicitudes de facturación. Todos los Derechos Reservados ©<br />
@@ -74,7 +84,7 @@ if (($_SESSION['autenticado'] == 'SI' &&  isset($_SESSION['oper_sol'])) )
     </div>  
 </body>
 </html>
-<?php
-} else {
-      header('Location: errorUsuario.php?Error=4');
-} ?>
+
+
+
+
