@@ -55,6 +55,8 @@ $id_usuario=$_SESSION['uid'];
                               $fac_precio_uni=$array_cont[$i][3];
                               $fac_descuento=$array_cont[$i][5];
 
+                                      if( ($id_concepto!='') || ($tx_concepto!='') || ($fac_unidades!='')){
+
                                         $query="INSERT INTO conceptos_doc (id_codigo_concepto,tx_concepto,fac_unidades,fac_precio_uni,fac_descuento,documento_iddocumento) VALUES ('".$id_concepto."','".$tx_concepto."','".$fac_unidades."','".$fac_precio_uni."','".$fac_descuento."','".$id_documento."')";
                                         $result2=$mysqli->query($query);
                                              if($result2){
@@ -65,6 +67,7 @@ $id_usuario=$_SESSION['uid'];
                                              else{
                                               echo "no guardado" . $mysqli->error;
                                              }
+                                      } else { echo "no guardo conceptos";}
                               }
 
 
