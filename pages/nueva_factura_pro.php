@@ -8,6 +8,9 @@
 <?php
  include("config.php");
 
+
+
+
   if(isset($_POST["submit_pro"])) {    
 
 if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
@@ -34,15 +37,50 @@ $id_area=$_SESSION['area'];
 $id_usuario=$_SESSION['uid'];
 
 
+
  $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
+
+
+$status = "";
+	if ($_POST["action"] == "upload") {
+	// obtenemos los datos del archivo 
+	$tamano = $_FILES["archivo"]['size'];
+	$tipo = $_FILES["archivo"]['type'];
+	$archivo = $_FILES["archivo"]['name'];
+	$prefijo = substr(md5(uniqid(rand())),0,6);
+	
+	if ($archivo != "") {
+		// guardamos el archivo a la carpeta files
+		$destino =  "Archivos/".$id_solicitud.'-'.$archivo;
+		if (copy($_FILES['archivo']['tmp_name'],$destino)) {
+			$status = "Archivo subido: <b>".$archivo."</b>";
+		} else {
+			$status = "Error al subir el archivo";
+		}
+	} else {
+		$status = "Error al subir archivo";
+	}
+	echo $status;
+
+}
+		
+		
+		
+if ($archivo != "") 	{
+		$ext_archivo = $id_solicitud.'-'.$archivo;
+		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes) VALUE ('$ext_archivo', '$id_solicitud')";
+		$result_adjunto = $mysqli->query($query_adjuntos);
+}		
 
       if($result){
         
             $query="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) VALUES (now(),0,'".$id_solicitud."','".$id_usuario."','".$id_area."')";
             $result0=$mysqli->query($query);
 
+				
+			
             if($result0){        
                         $query="INSERT INTO documento (id_codigo_cliente,dias_vencimiento,leyenda_doc,compa_fac,IVA_idIVA,Moneda_idMoneda,tipo_documento_idtipo_doc,solicitudes_idSolicitudes,razon_social,leyenda_mat,salida,motivos) VALUES ('".$cod_cliente."','".$dias_ven."','".$leyenda_doc."','".$compa_fac."','".$iva."','".$moneda."','".$tipo_documento."','". $id_solicitud."','".$razon_social."','".$leyenda_mat."','".$salida."','".$motivo_sol."')";
                         $result1=$mysqli->query($query);
@@ -83,8 +121,12 @@ $id_usuario=$_SESSION['uid'];
             } else{
               echo "Error: No guardado 0" . $mysqli->error;
             }
+            
+  
+
 
       }
+
 
   if(isset($_POST["submit"])) {
   
@@ -110,7 +152,7 @@ $id_usuario=$_SESSION['uid'];
   $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post" id="nueva_factura">
+  <form class="formulario_n" action="#" method="post" id="nueva_factura" enctype="multipart/form-data">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $cod_cliente;?></p>
@@ -189,7 +231,11 @@ $id_usuario=$_SESSION['uid'];
     </table>
     <table class="gridview">
     <tr>
-    <td colspan="3"><a href="#" id="adjuntar_archivos"><div class="agregar_observacion botones">Adjuntar Archivos</div></a></td>
+    <td colspan="3">
+    <div class="botones"> 
+    		<input name="archivo" type="file" size="35" />
+    		<input name="action" type="hidden" value="upload" /> 
+    </div></td>
     <td></td>
     <td></td>
     <td></td>

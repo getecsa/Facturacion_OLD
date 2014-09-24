@@ -71,7 +71,16 @@ $(document).ready(function(){
             $('#submit_return_nf').click(function(){
               $('#nueva_factura').attr('action', 'homepage.php?id=nueva_factura');
               });
+
+            $('#submit_return_nc').click(function(){
+              $('#nueva_nota').attr('action', 'homepage.php?id=nueva_nota');
+              }); 
     
+            $('#submit_return_re_cc').click(function(){
+              $('#nueva_refactura_cc').attr('action', 'homepage.php?id=refactura_con_cambio');
+              }); 
+    
+
     //funcion para agregar en facturacion
 
                 var contenedor      = $("#agregar_detalle"); 
