@@ -232,10 +232,13 @@ if ($archivo != "") 	{
     <table class="gridview">
     <tr>
     <td colspan="3">
-    <div class="botones"> 
-    		<input name="archivo" type="file" size="35" />
+    <div class="agregar_observacion botones custom-input-file">Adjuntar Archivos: 
+    		<input name="archivo" type="file" size="35" class="input-file" />
     		<input name="action" type="hidden" value="upload" /> 
-    </div></td>
+    </div>
+    
+    
+    </td>
     <td></td>
     <td></td>
     <td></td>

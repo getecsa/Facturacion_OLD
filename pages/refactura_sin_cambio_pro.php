@@ -93,6 +93,12 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
       	
       $array_cont=$_POST["add_cont"];  
       $num_concepto=$_POST['num_concepto'];
+
+      if($_POST['return']==1){
+      $num_return=$_POST['num_return'];
+      $num_concepto=$num_concepto+$num_return-1;
+       }
+      
       $cod_cliente=$_POST['cod_cliente'];
       $motivo_sol=$_POST['motivo_sol'];
       $leyenda_doc=$_POST['leyenda_doc'];
@@ -114,7 +120,7 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
       $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post">
+  <form class="formulario_n" action="#" method="post" id="nueva_refactura_sc">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $_POST['cod_cliente'];?></p>
@@ -266,7 +272,7 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
                   
                  
                        <input type="submit" id="submit" name="submit_pro" value="Enviar" >
-                    <input type="reset" value="Borrar" >
+                       <input type="submit" value="Regresar" name="submit_return" id="submit_return_re_sc" >
                   </div>
 
         </form>

@@ -80,6 +80,9 @@ $(document).ready(function(){
               $('#nueva_refactura_cc').attr('action', 'homepage.php?id=refactura_con_cambio');
               }); 
     
+            $('#submit_return_re_sc').click(function(){
+              $('#nueva_refactura_sc').attr('action', 'homepage.php?id=refactura_sin_cambio');
+              }); 
 
     //funcion para agregar en facturacion
 

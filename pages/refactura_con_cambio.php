@@ -68,19 +68,32 @@ $return=1;
                       </div>  
                       <div class="column bottom_nc">   
                       <label for="moneda">Moneda:</label>
-                        <select name="moneda">
+                       <select name="moneda">
                           <?php 
                             while($row=mysql_fetch_array($result_moneda)){
-                            echo "<option value='",$row['id_moneda'],"'>",$row['moneda'],"</option>";
+                            echo "<option value='",$row['id_moneda'],"'";
+                              if($return==1){ 
+                                if($row['id_moneda']==$moneda)
+                                  {
+                                    echo"selected";
+                                  }
+                                } 
+                            echo ">",$row['moneda'],"</option>";
                               }
                           ?>
                         </select>
-
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
-                          <?php 
+                      <?php 
                             while($row=mysql_fetch_array($result_iva)){
-                            echo "<option value='",$row['id_iva'],"'>",$row['valor_tx'],"</option>";
+                            echo "<option value='",$row['id_iva'],"'";
+                              if($return==1){ 
+                                if($row['id_iva']==$iva)
+                                  {
+                                    echo"selected";
+                                  }
+                                } 
+                            echo ">",$row['valor_tx'],"</option>";
                               }
                           ?>
                       </select>
