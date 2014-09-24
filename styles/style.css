@@ -295,13 +295,14 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     cursor: pointer;
     border: 1px solid #000;
     border-radius: 5px;
-    background-color: #fff;
-    color: #000;
+background: url(../images/botonbgcenter.fw.png) top repeat-x; /* for all you older browsers out there */
+    background: url(../images/botonbgleft.fw.png) left top no-repeat, url(../images/botonbgright.fw.png) right top no-repeat, url(../images/botonbgcenter.fw.png) center top repeat-x;
+        color: #fff;
     text-align: center;
     font-family: verdana;
-    font-size: 12pt;
+    font-size: 10pt;
     width: 200px;
-    min-height: 40px;
+    min-height: 30px;
 }
 .custom-input-file:hover {
     background-color: #000;
@@ -320,8 +321,8 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     cursor: pointer;
 }
 .custom-input-file .archivo {
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     font-size: 7pt;
     overflow: hidden;
 }
