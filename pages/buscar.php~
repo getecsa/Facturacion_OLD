@@ -54,7 +54,7 @@ include("cliente.php");
 
 
 <?php 
-
+if(isset($_POST["buscar"])) {
 echo $_POST["buscar"]; 
-
+}
 ?>
