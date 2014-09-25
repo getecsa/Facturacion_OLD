@@ -44,6 +44,39 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
+
+$status = "";
+	if ($_POST["action"] == "upload") {
+	// obtenemos los datos del archivo 
+	$tamano = $_FILES["archivo"]['size'];
+	$tipo = $_FILES["archivo"]['type'];
+	$archivo = $_FILES["archivo"]['name'];
+	$prefijo = substr(md5(uniqid(rand())),0,6);
+	
+	if ($archivo != "") {
+		// guardamos el archivo a la carpeta files
+		$destino =  "Archivos/".$id_solicitud.'-'.$archivo;
+		if (copy($_FILES['archivo']['tmp_name'],$destino)) {
+			$status = "Archivo subido: <b>".$archivo."</b>";
+		} else {
+			$status = "Error al subir el archivo";
+		}
+	} else {
+		$status = "Error al subir archivo";
+	}
+	echo $status;
+
+}
+		
+		
+		
+if ($archivo != "") 	{
+		$ext_archivo = $id_solicitud.'-'.$archivo;
+		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes) VALUE ('$ext_archivo', '$id_solicitud')";
+		$result_adjunto = $mysqli->query($query_adjuntos);
+}	
+
+
       if($result){
         
             $query="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) VALUES (now(),0,'".$id_solicitud."','".$id_usuario."','".$id_area."')";
@@ -120,7 +153,7 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
       $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post" id="nueva_refactura_sc">
+  <form class="formulario_n" action="#" method="post" id="nueva_refactura_sc" enctype="multipart/form-data">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $_POST['cod_cliente'];?></p>
@@ -204,8 +237,18 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
     <?php } ?>
     </table>
     <table class="gridview">
+   <table class="gridview">
     <tr>
-    <td colspan="3"><a href="#" id="adjuntar_archivos"><div class="agregar_observacion botones">Adjuntar Archivos</div></a></td>
+    <td colspan="3">
+    
+    
+    <div class="custom-input-file botones">
+    <input type="file" class="input-file" name="archivo" />
+Adjuntar Archivos
+    <div class="archivo">...</div>
+    <input name="action" type="hidden" value="upload" /> 
+</div>
+    </td>
     <td></td>
     <td></td>
     <td></td>

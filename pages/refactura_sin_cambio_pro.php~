@@ -2,7 +2,7 @@
       <div class="contenedor">
                   <div class="header">
                       <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                      <h1>Confirmacion de refactura con cambio</h1>
+                      <h1>Confirmacion de refactura sin cambio</h1>
                   </div>
           <div class="content">
 <?php
@@ -43,41 +43,6 @@ if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
  $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
- 
- 
- 
-$status = "";
-	if ($_POST["action"] == "upload") {
-	// obtenemos los datos del archivo 
-	$tamano = $_FILES["archivo"]['size'];
-	$tipo = $_FILES["archivo"]['type'];
-	$archivo = $_FILES["archivo"]['name'];
-	$prefijo = substr(md5(uniqid(rand())),0,6);
-	
-	if ($archivo != "") {
-		// guardamos el archivo a la carpeta files
-		$destino =  "Archivos/".$id_solicitud.'-'.$archivo;
-		if (copy($_FILES['archivo']['tmp_name'],$destino)) {
-			$status = "Archivo subido: <b>".$archivo."</b>";
-		} else {
-			$status = "Error al subir el archivo";
-		}
-	} else {
-		$status = "Error al subir archivo";
-	}
-	echo $status;
-
-}
-		
-		
-		
-if ($archivo != "") 	{
-		$ext_archivo = $id_solicitud.'-'.$archivo;
-		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes) VALUE ('$ext_archivo', '$id_solicitud')";
-		$result_adjunto = $mysqli->query($query_adjuntos);
-}		
- 
- 
 
       if($result){
         
@@ -129,11 +94,11 @@ if ($archivo != "") 	{
       $array_cont=$_POST["add_cont"];  
       $num_concepto=$_POST['num_concepto'];
 
-        if($_POST['return']==1){
-          $num_return=$_POST['num_return'];
-          $num_concepto=$num_concepto+$num_return-1;
-            }
-
+      if($_POST['return']==1){
+      $num_return=$_POST['num_return'];
+      $num_concepto=$num_concepto+$num_return-1;
+       }
+      
       $cod_cliente=$_POST['cod_cliente'];
       $motivo_sol=$_POST['motivo_sol'];
       $leyenda_doc=$_POST['leyenda_doc'];
@@ -155,7 +120,7 @@ if ($archivo != "") 	{
       $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post" id="nueva_refactura_cc" enctype="multipart/form-data">
+  <form class="formulario_n" action="#" method="post" id="nueva_refactura_sc" enctype="multipart/form-data">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $_POST['cod_cliente'];?></p>
@@ -239,6 +204,7 @@ if ($archivo != "") 	{
     <?php } ?>
     </table>
     <table class="gridview">
+   <table class="gridview">
     <tr>
     <td colspan="3">
     
@@ -254,7 +220,7 @@ Adjuntar Archivos
     <td></td>
     <td></td>
     <td></td>
-   </tr>
+   </tr> 
    <tr>
     <td colspan="3">&nbsp;</td>
     <td>SubTotal:</td>
@@ -316,7 +282,7 @@ Adjuntar Archivos
                   
                  
                        <input type="submit" id="submit" name="submit_pro" value="Enviar" >
-                       <input type="submit" value="Regresar" name="submit_return" id="submit_return_re_cc" >
+                       <input type="submit" value="Regresar" name="submit_return" id="submit_return_re_sc" >
                   </div>
 
         </form>

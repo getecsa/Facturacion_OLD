@@ -219,3 +219,27 @@ p {
   width: 100%;
   text-align: center;
 }
+.datos_informacion {
+  position: relative;
+}
+.datos_informacion .datos_totales {
+  width: 300px;
+  background: #00517a;
+  padding: 0 2px;
+  margin: 2px;
+  border-radius: 5px;
+  display: inline-block;
+}
+.datos_informacion .datos_totales p {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  position: relative;
+  border-radius: 2px;
+}
+.datos_informacion .datos_totales p span {
+  position: absolute;
+  right: 0;
+}
+.datos_informacion .right {
+  right: 0;
+}

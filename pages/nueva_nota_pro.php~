@@ -2,7 +2,7 @@
       <div class="contenedor">
                   <div class="header">
                       <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                      <h1>Confirmacion Factura</h1>
+                      <h1>Confirmacion Nota de credito</h1>
                   </div>
           <div class="content">
 <?php
@@ -12,22 +12,28 @@
 
 if( (!isset($_POST["cod_cliente"])) || (!isset($_POST["razon_social"]))  ){
 
-    header('Location: homepage.php?id=nueva_factura');
+    header('Location: homepage.php?id=nueva_nota');
 }
 
+  $array_cont=$_POST["array_cont"];  
+  $num_concepto=$_POST['num_concepto'];
 
-$array_cont=$_POST["array_cont"];  
-$num_concepto=$_POST['num_concepto'];
-$cod_cliente=$_POST['cod_cliente'];
-$motivo_sol=$_POST['motivo_sol'];
-$dias_ven=$_POST['dias_ven'];
-$leyenda_doc=$_POST['leyenda_doc'];
-$iva=$_POST["iva"];
-$leyenda_mat=$_POST['leyenda_mat'];
-$razon_social=$_POST['razon_social'];
-$compa_fac=$_POST['compa_fac'];
-$moneda=$_POST['moneda'];
-$salida=$_POST['salida'];
+if($_POST['return']==1){
+  $num_return=$_POST['num_return'];
+  $num_concepto=$num_concepto+$num_return-1;
+    }
+
+  $cod_cliente=$_POST['cod_cliente'];
+  $motivo_sol=$_POST['motivo_sol'];
+  $folio_fac_origen=$_POST['folio_fac_origen'];
+  $leyenda_doc=$_POST['leyenda_doc'];
+  $tipo_nc=$_POST['tipo_nc'];
+  $iva=$_POST["iva"];
+  $mt_fac_orig=$_POST['mt_fac_orig'];
+  $fecha_emision_nc=$_POST['fecha_emision_nc'];
+  $razon_social=$_POST['razon_social'];
+  $monto_afectar_nc=$_POST['monto_afectar_nc'];
+  $moneda=$_POST['moneda'];
 $tipo_cliente=$_POST['tipo_cliente'];
 $tipo_documento=$_POST['tipo_documento'];
 $id_area=$_SESSION['area'];
@@ -38,13 +44,44 @@ $id_usuario=$_SESSION['uid'];
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
+$status = "";
+	if ($_POST["action"] == "upload") {
+	// obtenemos los datos del archivo 
+	$tamano = $_FILES["archivo_nota"]['size'];
+	$tipo = $_FILES["archivo_nota"]['type'];
+	$archivo = $_FILES["archivo_nota"]['name'];
+	$prefijo = substr(md5(uniqid(rand())),0,6);
+	
+	if ($archivo != "") {
+		// guardamos el archivo a la carpeta files
+		$destino =  "Archivos/".$id_solicitud.'-'.$archivo;
+		if (copy($_FILES['archivo_nota']['tmp_name'],$destino)) {
+			$status = "Archivo subido: <b>".$archivo."</b>";
+		} else {
+			$status = "Error al subir el archivo 1";
+		}
+	} else {
+		$status = "Error al subir archivo 2";
+	}
+	echo $status;
+
+}		
+		
+	
+if ($archivo != "") 	{
+		$ext_archivo = $id_solicitud.'-'.$archivo;
+		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes) VALUE ('$ext_archivo', '$id_solicitud')";
+		$result_adjunto = $mysqli->query($query_adjuntos);
+}		
+
+
       if($result){
         
             $query="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) VALUES (now(),0,'".$id_solicitud."','".$id_usuario."','".$id_area."')";
             $result0=$mysqli->query($query);
 
             if($result0){        
-                        $query="INSERT INTO documento (id_codigo_cliente,dias_vencimiento,leyenda_doc,compa_fac,IVA_idIVA,Moneda_idMoneda,tipo_documento_idtipo_doc,solicitudes_idSolicitudes,razon_social,leyenda_mat,salida,motivos) VALUES ('".$cod_cliente."','".$dias_ven."','".$leyenda_doc."','".$compa_fac."','".$iva."','".$moneda."','".$tipo_documento."','". $id_solicitud."','".$razon_social."','".$leyenda_mat."','".$salida."','".$motivo_sol."')";
+                        $query="INSERT INTO documento (id_codigo_cliente,tipo_nc,leyenda_doc,IVA_idIVA,Moneda_idMoneda,tipo_documento_idtipo_doc,solicitudes_idSolicitudes,razon_social,motivos,folio_fac_origen,monto_total_fac_orig,monto_afectar_nc,fecha_emision_nc) VALUES ('".$cod_cliente."','".$tipo_nc."','".$leyenda_doc."','".$iva."','".$moneda."','".$tipo_documento."','". $id_solicitud."','".$razon_social."','".$motivo_sol."','".$folio_fac_origen."','".$mt_fac_orig."','".$monto_afectar_nc."','".$fecha_emision_nc."')";
                         $result1=$mysqli->query($query);
                         $id_documento=$mysqli->insert_id;
                           if($result1){
@@ -81,45 +118,40 @@ $id_usuario=$_SESSION['uid'];
               echo "Error: No guardado 0" . $mysqli->error;
             }
 
+
       }
 
-  if(isset($_POST["submit"])) {
-  
-  $array_cont=$_POST["add_cont"]; 
-  
-   if(isset($_POST["num_concepto2"])){
-   	$num_concepto=$_POST['num_concepto']-1+$_POST['num_concepto2'];
-   	echo "Nuevos conceptos".($_POST['num_concepto']-1).'+ Conceptos arrastrando'.$_POST['num_concepto2'];
-   	echo "--".$num_concepto;
-   	}
-  else {
-  $num_concepto=$_POST['num_concepto'];
-  }
- var_dump($array_cont);
 
+
+	if(isset($_POST["submit"])) {
+	
+  $array_cont=$_POST["add_cont"];  
+  $num_concepto=$_POST['num_concepto'];
   $cod_cliente=$_POST['cod_cliente'];
   $motivo_sol=$_POST['motivo_sol'];
-  $dias_ven=$_POST['dias_ven'];
+  $folio_fac_origen=$_POST['folio_fac_origen'];
   $leyenda_doc=$_POST['leyenda_doc'];
+  $tipo_nc=$_POST['tipo_nc'];
   $iva=$_POST["iva"];
-  $leyenda_mat=$_POST['leyenda_mat'];
+  $mt_fac_orig=$_POST['mt_fac_orig'];
+  $fecha_emision_nc=$_POST['fecha_emision_nc'];
   $razon_social=$_POST['razon_social'];
-  $compa_fac=$_POST['compa_fac'];
+  $monto_afectar_nc=$_POST['monto_afectar_nc'];
   $moneda=$_POST['moneda'];
-  $salida=$_POST['salida'];
   $tipo_cliente=$_POST['tipo_cliente'];
   $tipo_documento=$_POST['tipo_documento'];
 
 ?>
-  <form class="formulario_n" action="#" method="post">
+  <form class="formulario_n" action="#" method="post" id="nueva_nota" enctype="multipart/form-data">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><p><?php echo $cod_cliente;?></p>
                         <label for="motivo_sol">Motivo de solicitud:</label><p><?php echo $motivo_sol;?></p>
-                        <label for="dias_ven">Días de vencimiento:</label><p><?php echo $dias_ven;?></p>
                         <label for="leyenda_doc">Leyenda del documento:</label><p><?php echo $leyenda_doc;?></p>
+                        <label for="folio_fac_origen">Folio factura origen:</label><p><?php echo $folio_fac_origen;?></p>
                       </div>  
-                      <div class="column bottom">   
+                      <div class="column bottom_nc">
+                      <label for="tipo_nc">Tipo Nota Credito:</label><p><?php echo $tipo_nc;?></p>
                       <label for="iva">IVA:</label>
                         <?php 
                             $sql_iva="select * from iva where id_iva=$iva";
@@ -129,12 +161,11 @@ $id_usuario=$_SESSION['uid'];
                             echo "<p>",$row['valor_tx'],"</p>";
                               }
                           ?>
-                    <label for="leyenda_mat">Leyenda Material:</label><p><?php echo $leyenda_mat;?></p>
+                    <label for="mt_fac_orig">Monto Total (Fac Origen):</label><p><?php echo $mt_fac_orig;?></p>
                       </div>
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><p><?php echo $razon_social;?></p>
-                        <label for="compa_fac">Compañia facturadora:</label><p><?php echo $compa_fac;?></p>
                         <label for="moneda">Moneda:</label>
                         <?php 
                             $sql_moneda="select * from moneda where id_moneda=$moneda";
@@ -144,8 +175,8 @@ $id_usuario=$_SESSION['uid'];
                               }
                           ?>
 
-
-                        <label for="salida">Salida:</label><p><?php echo $salida;?></p>
+                        <label for="fecha_emision_nc">Fecha Emision:</label><p><?php echo $fecha_emision_nc;?></p>
+                        <label for="monto_afectar_nc">Monto Afectar con NC:</label><p><?php echo $monto_afectar_nc;?></p>
                       </div>
                     
   <div id="detalles_factura">
@@ -190,7 +221,14 @@ $id_usuario=$_SESSION['uid'];
     </table>
     <table class="gridview">
     <tr>
-    <td colspan="3"><a href="#" id="adjuntar_archivos"><div class="agregar_observacion botones">Adjuntar Archivos</div></a></td>
+    <td colspan="3">
+			   <div class="custom-input-file botones">
+    				<input type="file" class="input-file" name="archivo_nota" />
+						Adjuntar Archivos
+    			<div class="archivo">...</div>
+    				<input name="action" type="hidden" value="upload" /> 
+				</div>    
+    </td>
     <td></td>
     <td></td>
     <td></td>
@@ -232,46 +270,28 @@ $id_usuario=$_SESSION['uid'];
   </table> 
         </fieldset>
                    <div class="boton_envio">                
-   <input  type="hidden" id="num_concepto" name="num_concepto" value="<?php echo $num_concepto; ?>">                  
-   <input  type="hidden" id="cod_cliente" name="cod_cliente" value="<?php echo $cod_cliente; ?>">                  
-   <input  type="hidden" id="motivo_sol" name="motivo_sol" value="<?php echo $motivo_sol; ?>">                  
-   <input  type="hidden" id="dias_ven" name="dias_ven" value="<?php echo $dias_ven; ?>">                  
-   <input  type="hidden" id="leyenda_doc" name="leyenda_doc" value="<?php echo $leyenda_doc; ?>">                  
-   <input  type="hidden" id="razon_social" name="razon_social" value="<?php echo $razon_social; ?>">                  
-   <input  type="hidden" id="compa_fac" name="compa_fac" value="<?php echo $compa_fac; ?>">                  
-   <input  type="hidden" id="moneda" name="moneda" value="<?php echo $moneda; ?>">                  
-   <input  type="hidden" id="salida" name="salida" value="<?php echo $salida; ?>">                  
-   <input  type="hidden" id="tipo_cliente" name="tipo_cliente" value="<?php echo $tipo_cliente; ?>">                  
-   <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
-   <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
-   <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">                 
+    <input  type="hidden" id="num_concepto" name="num_concepto" value="<?php echo $num_concepto; ?>">                  
+    <input  type="hidden" id="cod_cliente" name="cod_cliente" value="<?php echo $cod_cliente; ?>">                  
+    <input  type="hidden" id="folio_fac_origen" name="folio_fac_origen" value="<?php echo $folio_fac_origen; ?>">                  
+    <input  type="hidden" id="tipo_nc" name="tipo_nc" value="<?php echo $tipo_nc; ?>">                  
+    <input  type="hidden" id="leyenda_doc" name="leyenda_doc" value="<?php echo $leyenda_doc; ?>">                  
+    <input  type="hidden" id="razon_social" name="razon_social" value="<?php echo $razon_social; ?>">                  
+    <input  type="hidden" id="motivo_sol" name="motivo_sol" value="<?php echo $motivo_sol; ?>">                  
+    <input  type="hidden" id="moneda" name="moneda" value="<?php echo $moneda; ?>">                  
+    <input  type="hidden" id="mt_fac_orig" name="mt_fac_orig" value="<?php echo $mt_fac_orig; ?>">                  
+    <input  type="hidden" id="tipo_cliente" name="tipo_cliente" value="<?php echo $tipo_cliente; ?>">                  
+    <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
+    <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
+    <input  type="hidden" id="fecha_emision_nc" name="fecha_emision_nc" value="<?php echo $fecha_emision_nc; ?>">                 
+    <input  type="hidden" id="monto_afectar_nc" name="monto_afectar_nc" value="<?php echo $monto_afectar_nc; ?>">                 
    
+
                     <input type="submit" id="submit" name="submit_pro" value="Enviar" >
-     </form>
-<?php $data = serialize($array_cont);
-$order = htmlentities($data);
-?>
-     <form action="homepage.php?id=nueva_factura" method="POST">
-   <input  type="hidden" id="bandera_return" name="bandera_return" value="1">     
-   <input  type="hidden" id="array_cont" name="array_cont" value="<?php echo $order; ?>">
-   <input  type="hidden" id="num_concepto" name="num_concepto" value="<?php echo $num_concepto; ?>">                  
-   <input  type="hidden" id="cod_cliente" name="cod_cliente" value="<?php echo $cod_cliente; ?>">                  
-   <input  type="hidden" id="motivo_sol" name="motivo_sol" value="<?php echo $motivo_sol; ?>">                  
-   <input  type="hidden" id="dias_ven" name="dias_ven" value="<?php echo $dias_ven; ?>">                  
-   <input  type="hidden" id="leyenda_doc" name="leyenda_doc" value="<?php echo $leyenda_doc; ?>">                  
-   <input  type="hidden" id="razon_social" name="razon_social" value="<?php echo $razon_social; ?>">                  
-   <input  type="hidden" id="compa_fac" name="compa_fac" value="<?php echo $compa_fac; ?>">                  
-   <input  type="hidden" id="moneda" name="moneda" value="<?php echo $moneda; ?>">                  
-   <input  type="hidden" id="salida" name="salida" value="<?php echo $salida; ?>">                  
-   <input  type="hidden" id="tipo_cliente" name="tipo_cliente" value="<?php echo $tipo_cliente; ?>">                  
-   <input  type="hidden" id="tipo_documento" name="tipo_documento" value="<?php echo $tipo_documento; ?>">                 
-   <input  type="hidden" id="iva" name="iva" value="<?php echo $id_iva; ?>">                 
-   <input  type="hidden" id="leyenda_mat" name="leyenda_mat" value="<?php echo $leyenda_mat; ?>">  
-                    <input type="submit" value="Regresar" name="submit_return" >
+                    <input type="submit" value="Regresar" name="submit_return" id="submit_return_nc" >
                   </div>
 
         </form>
 <?php } ?>
           </div>
         </div>
- </div>   	
+ </div>   

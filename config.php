@@ -6,6 +6,7 @@ $dbuser="root";
 $dbpass="getecsa"; 
  
 $link=mysql_connect($server,$dbuser,$dbpass);
+$con=$link;
 mysql_query("SET NAMES 'utf8'");
 
 $mysqli = new mysqli($server, $dbuser, $dbpass, $db);
