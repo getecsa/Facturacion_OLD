@@ -1,4 +1,8 @@
 <?php
+include("conectar_bd.php");	
+
+$id_user = $_SESSION['uid'];
+
  //Validar que el usuario este logueado y exista un UID
 if ( ! ($_SESSION['autenticado'] == 'SI' && isset($_SESSION['uid'])) )
 {
@@ -25,10 +29,9 @@ include("cliente.php");
 
 <form action="homepage.php?id=buscar" method="post">                 
 <table width=30%>
-
 <tr>
 <td><h2 class="block">Folio:</h2></td>
-<td>  <input type="text"></td>
+<td>  <input type="text" name="folio"></td>
 <td> <input type="submit" value="Buscar Folio" name="buscar"></td>
 <td></td>
 </tr>
@@ -47,14 +50,85 @@ include("cliente.php");
 </tr>
 </table>
 </form>
-                </div>    
-               
-               
-               </div>
+                
+<?php
+ 
+	if(isset($_POST["buscar"])&& $_POST["buscar"]== 'Buscar Folio') {
+ 
+   		$folio = $_POST["folio"];
+   
+			$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha, so.estado_actual
+        	FROM solicitudes so
+  			INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  			INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
+  			INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+       	WHERE so.users_id_usuario='$id_user'
+         AND so.id_solicitudes='$folio'";
 
+			echo '<table class="gridview">
+						<tr bgcolor="00517A">
+                        <td ><font color="#fff">ID</font></td>
+                        <td ><font color="#fff">Tipo de solictud</font></td>
+                        <td ><font color="#fff">Fecha Ingreso</font></td>
+                        <td ><font color="#fff">Estatus</font></td>
+                  </tr>';
 
-<?php 
-if(isset($_POST["buscar"])) {
-echo $_POST["buscar"]; 
-}
+					if ($rs = mysqli_query($con, $sql)) {
+    
+						while ($fila = mysqli_fetch_assoc($rs)) {
+
+							if($fila["estado_actual"]==0 || $fila["estado_actual"]==1 || $fila["estado_actual"]==2 || $fila["estado_actual"]==3 ||
+             				$fila["estado_actual"]==5 || $fila["estado_actual"]=6){
+									$estatus = 'Pendiente';             
+             			}
+							else if($fila["estado_actual"]==4 ){
+									$estatus = 'Rechazada';             
+             			}
+							else if($fila["estado_actual"]==7 ){
+									$estatus = 'Aceptada';             
+             			}
 ?>
+
+                    <tr>
+                        <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>&bandera=buscar" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"><?php echo $fila["id_solicitudes"]; ?></a></td>
+                        <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo utf8_encode($fila["tipo_doc"]); ?></a></td>
+                        <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $fila["fecha"]; ?></a></td>
+                       <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $estatus; if($estatus=='7') { echo ' Descargar Documentos: ';}?></a></td>
+     						
+                    </tr>
+<?php 				}
+					}       
+
+				echo '<tr bgcolor="00517A">                   
+                        <td colspan="2" ><font color="#fff">Fecha Observación</font></td>
+                        <td colspan="2"><font color="#fff">Observación</font></td>
+                  </tr>';
+                    
+$sql = "SELECT fecha_observacion as fecha, observacion 
+FROM `observaciones` WHERE `solicitudes_id_solicitudes` = '$folio'";
+
+	if ($rs = mysqli_query($con, $sql)) {
+	/* fetch array asociativo*/
+		while ($fila = mysqli_fetch_assoc($rs)) {
+
+			echo '<tr>           				
+                        <td colspan="2">'.$fila["fecha"].'</td>
+                        <td colspan="2">'.utf8_encode($fila["observacion"]).'</td>                 
+               </tr>                    
+ 			</table>';
+		}
+
+	}
+    
+    
+}
+
+else if(isset($_POST["buscar"])&& $_POST["buscar"]== 'Buscar Tipo') {
+echo $_POST["buscar"].' Buscar Tipo'; 
+   
+}
+
+?>
+
+</div>    
+</div>

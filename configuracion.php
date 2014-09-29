@@ -5,9 +5,6 @@ $db="sis_fac";
 $dbuser="root"; 
 $dbpass="getecsa"; 
  
-$link=mysql_connect($server,$dbuser,$dbpass);
-mysql_query("SET NAMES 'utf8'");
-
 $mysqli = new mysqli($server, $dbuser, $dbpass, $db);
 $mysqli->set_charset("utf8");
 

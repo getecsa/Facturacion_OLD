@@ -202,7 +202,28 @@ var descuento=0;
            });
 //fin funcion fecha
 
+//funcion para selec de estados en modulo de operacion
+
+$('#select_operador').change(function(){
+var id_estado_sol=$(this).val();
+$('#id_estados_sol').attr('action', 'homepage.php?id=operador');
+$('#id_estados_sol').submit();
+});
+
+//funcion para tomar solicitud
+
+$('.tomar_solicitud').click(function(){
+var id_solicitud = $(this).attr("id");
+$('#tomar_solicitud').attr('action', 'homepage.php?id=operador');
+$("#valor_solicitud").val(id_solicitud);
+$("#tomo").val(1);
+$('#tomar_solicitud').submit();  
+});
+
+
 }); 
+
+//funcion daniel
 
 $(function(){
     $(".custom-input-file input:file").change(function(){
@@ -212,3 +233,5 @@ $(function(){
             return 0;
     });
 });
+
+
