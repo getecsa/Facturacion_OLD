@@ -13,10 +13,17 @@
 
 if($valor_solicitud!=0){
     $sql="UPDATE solicitudes
-             SET reservada='1'
+             SET reservada='1', estado_actual='1',area_flujo='$id_area',usuario_reserva='$id_user'
            WHERE id_solicitudes='$valor_solicitud'";
     $result=$mysqli->query($sql); 
-      if($result){echo "asignado";} else {echo "no asignado";}
+      if($result){
+        $sql1="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) 
+                   VALUES (now(),1,'".$valor_solicitud."', '".$id_user."','".$id_area."' )";
+        $result1=$mysqli->query($sql1);
+          if($result1){
+            echo "Guardado Insert";
+          }
+      }
 
     }else {
       echo "NADA";
@@ -94,8 +101,9 @@ if($valor_solicitud!=0){
 <?php 
 
 
-if ($id_estado_click==0){
 
+
+if ($id_estado_click==0){
 $sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
@@ -106,6 +114,20 @@ $sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fech
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
        WHERE area_flujo='$id_area_op' AND reservada=0 AND estado_actual='$id_estado_click'"  ;
 
+}
+
+if ($id_estado_click==1){
+$sql="SELECT DISTINCT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+  INNER JOIN area ar ON so.area_idarea=ar.id_area
+  INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
+  INNER JOIN users us ON so.users_id_usuario=us.id_usuario
+       WHERE usuario_reserva='$id_user' AND reservada=1 AND estado_actual='$id_estado_click'"  ;
+
+}
 
     $result=$mysqli->query($sql);
     $bgcolor=0;
@@ -121,8 +143,7 @@ $sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fech
                         <td><?php echo $row['estado_sol']; ?></td>
                         <td><a href="#" class="tomar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-checkmark"></span></a></td>
                     </tr>
-<?php } 
-}
+<?php }  
 
 ?>
                             
