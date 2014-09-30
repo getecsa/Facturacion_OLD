@@ -216,7 +216,17 @@ $('.tomar_solicitud').click(function(){
 var id_solicitud = $(this).attr("id");
 $('#tomar_solicitud').attr('action', 'homepage.php?id=operador');
 $("#valor_solicitud").val(id_solicitud);
-$("#tomo").val(1);
+$("#accion").val(1);
+$('#tomar_solicitud').submit();  
+});
+
+//funcion para liberar solicitud
+
+$('.liberar_solicitud').click(function(){
+var id_solicitud = $(this).attr("id");
+$('#tomar_solicitud').attr('action', 'homepage.php?id=operador');
+$("#valor_solicitud").val(id_solicitud);
+$("#accion").val(2);
 $('#tomar_solicitud').submit();  
 });
 

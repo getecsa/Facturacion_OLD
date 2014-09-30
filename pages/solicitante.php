@@ -69,7 +69,6 @@ if ($param=='Pendiente'){
 $sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
-  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
        WHERE so.users_id_usuario='$id_user'
          AND so.estado_actual=0 || so.estado_actual=1 || so.estado_actual=2 || so.estado_actual=3 ||

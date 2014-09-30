@@ -21,7 +21,13 @@
   content: "\e600";
 }
 .icon-file:before {
+  content: "\e60b";
+}
+.icon-file:before {
   content: "\e601";
+}
+.icon-stack:before {
+  content: "\e60c";
 }
 .icon-download:before {
   content: "\e602";
@@ -40,6 +46,9 @@
 }
 .icon-enter:before {
   content: "\e606";
+}
+.icon-exit:before {
+  content: "\e60a";
 }
 .icon-mail:before {
   content: "\e607";
@@ -291,4 +300,41 @@ p {
 }
 .datos_informacion .right {
   right: 0;
+}
+.espacio {
+  margin: 0 10px;
+}
+.detalle_historial {
+  font-size: small;
+  width: 100%;
+  padding: 0px;
+}
+.detalle_historial .ancho_historial {
+  width: 300px;
+}
+.detalle_historial ul {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+.detalle_historial ul li {
+  list-style: none;
+  padding: 4px 9px;
+}
+.detalle_historial ul li.title {
+  font-weight: bold;
+  background: #00517a;
+  border-top: 1px solid #fff;
+  color: #fff;
+}
+.detalle_historial ul li.title2 {
+  font-weight: bold;
+  background: #015a86;
+  color: #fff;
+}
+.detalle_historial ul li.uno {
+  background: #fff;
+}
+.detalle_historial ul li.dos {
+  background: #ffeee6;
 }

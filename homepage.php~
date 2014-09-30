@@ -50,8 +50,6 @@ if (($_SESSION['autenticado'] == 'SI' &&  isset($_SESSION['oper_sol'])) )
     <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
 
 
-
-
 </head>
 <body>
     <div id="main">

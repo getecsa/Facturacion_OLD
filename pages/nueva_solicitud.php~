@@ -67,7 +67,6 @@ include("cliente.php");
                                            <td><input type="submit" id="Enviar" name="Enviar" value="Enviar" onclick="return validarUsuarioNuevaSolictud();" /></td>
                                         </tr>
                                 </table>
-                                <div id="errorForm"></div> 
                     </form>
 
                </div>

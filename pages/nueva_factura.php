@@ -51,8 +51,11 @@ $id_usuario=$_SESSION['uid'];
 //termina return
 
 ?>
-                  <form class="formulario_n" action="homepage.php?id=nueva_factura_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=nueva_factura_pro" method="post" name="form1" id="form1">
+
+                   
                     <fieldset>
+                    
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" <?php if($return==1){ echo 'value="'.$cod_cliente.'"';} else{ ?> value="<?php echo $_POST['codigo_cliente']; }?>" />
                         <label for="motivo_sol">Motivo de solicitud:</label><input type="text" name="motivo_sol" id="motivo_sol" <?php if($return==1){ echo 'value="'.$motivo_sol.'"';} ?> />
@@ -62,6 +65,7 @@ $id_usuario=$_SESSION['uid'];
                       <div class="column bottom">   
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
+                      		<option value="0">Seleccione IVA</option>
                       <?php 
                             while($row=mysql_fetch_array($result_iva)){
                             echo "<option value='",$row['id_iva'],"'";
@@ -83,6 +87,7 @@ $id_usuario=$_SESSION['uid'];
                         <label for="compa_fac">Compañia facturadora:</label><input type="text" name="compa_fac" id="compa_fac" <?php if($return==1){ echo 'value="'.$compa_fac.'"';} ?>  />
                         <label for="moneda">Moneda:</label>
                         <select name="moneda">
+                        	<option value="0">Seleccione Moneda</option>
                           <?php 
                             while($row=mysql_fetch_array($result_moneda)){
                             echo "<option value='",$row['id_moneda'],"'";
@@ -179,7 +184,8 @@ $id_usuario=$_SESSION['uid'];
     <td></td>
     <td>$200</td>
    </tr>
-  </table> 
+  </table>
+   <div id="errorForm"></div> 
         </fieldset>
                    <div class="boton_envio">
                     <input  type="hidden" value="<?php echo $return; ?>" name="return" id="return">
@@ -187,11 +193,12 @@ $id_usuario=$_SESSION['uid'];
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
                     <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">
-                    <input type="submit" id="submit" name="submit" value="Enviar" >
+                    <input type="submit" id="submit" name="submit" value="Enviar" onclick="return validarUsuarioForm();" >
                     <input type="reset" value="Borrar" >
                   </div>
 
         </form> 
+      
       </div>
     </div>
  </div>   

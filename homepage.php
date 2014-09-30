@@ -49,6 +49,7 @@ if (($_SESSION['autenticado'] == 'SI' &&  isset($_SESSION['oper_sol'])) )
     <script type="text/javascript" src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
 
+	    <script src="scripts/validaciones.js"></script>
 
 </head>
 <body>

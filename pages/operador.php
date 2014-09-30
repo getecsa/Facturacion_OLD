@@ -9,25 +9,61 @@
     $id_estado_click=$_POST['id_estado_sol'];
     if(!isset($_POST['valor_solicitud'])){$_POST['valor_solicitud']=0;}
     $valor_solicitud=$_POST['valor_solicitud'];
+    if(!isset($_POST['accion'])){$_POST['accion']="-";}
+    $accion=$_POST['accion'];
 
 
-if($valor_solicitud!=0){
+if($accion==1){
     $sql="UPDATE solicitudes
              SET reservada='1', estado_actual='1',area_flujo='$id_area',usuario_reserva='$id_user'
            WHERE id_solicitudes='$valor_solicitud'";
     $result=$mysqli->query($sql); 
       if($result){
-        $sql1="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) 
-                   VALUES (now(),1,'".$valor_solicitud."', '".$id_user."','".$id_area."' )";
-        $result1=$mysqli->query($sql1);
-          if($result1){
-            echo "Guardado Insert";
-          }
-      }
 
-    }else {
-      echo "NADA";
+        //si ya existe no lo guarda nuevamente
+        $sql_ex="SELECT *
+                FROM historial_estados
+               WHERE estado_solicitud_idestado_solicitud=1 AND solicitudes_idSolicitudes='$valor_solicitud' 
+                 AND users_id_usuario='$id_user' AND area_id_area='$id_area'";
+        $result_ex=$mysqli->query($sql_ex);
+        $row_ex = $result_ex->num_rows;
+
+        if($row_ex==0){
+          $sql1="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) 
+                     VALUES (now(),1,'".$valor_solicitud."', '".$id_user."','".$id_area."' )";
+          $result1=$mysqli->query($sql1);
+         }
+
+      }
+}
+
+if($accion==2){
+    $sql="SELECT *
+           FROM historial_estados
+          WHERE solicitudes_idSolicitudes='$valor_solicitud' 
+          ORDER BY id_historial DESC";
+    $result=$mysqli->query($sql);
+    $dat=0;
+    while($row=$result->fetch_array(MYSQLI_ASSOC)){
+      $array_dat[$dat][0]=$row['estado_solicitud_idestado_solicitud'];
+      $array_dat[$dat][1]=$row['area_id_area'];
+      $dat++;
     }
+
+    if($array_dat[0][1]==1){
+      $array_dat[1][1]=1;
+    }
+
+    $sql="UPDATE solicitudes
+             SET reservada='0', estado_actual='".$array_dat[1][0]."',area_flujo='".$array_dat[1][1]."',usuario_reserva=''
+           WHERE id_solicitudes='$valor_solicitud'";
+    $result=$mysqli->query($sql); 
+      if($result){
+        $sql1="INSERT INTO historial_estados (fecha,estado_solicitud_idestado_solicitud,solicitudes_idSolicitudes,users_id_usuario,area_id_area) 
+                   VALUES (now(),0,'".$valor_solicitud."', '".$id_user."','".$id_area."' )";
+        $result1=$mysqli->query($sql1);
+      }
+}
 
     
 ?>
@@ -100,14 +136,10 @@ if($valor_solicitud!=0){
                     </tr>
 <?php 
 
-
-
-
 if ($id_estado_click==0){
 $sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
-  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
   INNER JOIN area ar ON so.area_idarea=ar.id_area
   INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
@@ -115,18 +147,16 @@ $sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fech
        WHERE area_flujo='$id_area_op' AND reservada=0 AND estado_actual='$id_estado_click'"  ;
 
 }
-
-if ($id_estado_click==1){
-$sql="SELECT DISTINCT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
+else {
+$sql="SELECT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
-  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
   INNER JOIN area ar ON so.area_idarea=ar.id_area
   INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
-       WHERE usuario_reserva='$id_user' AND reservada=1 AND estado_actual='$id_estado_click'"  ;
-
+       WHERE usuario_reserva='$id_user' AND area_flujo='$id_area_op' AND reservada=1 
+         AND estado_actual='$id_estado_click'"  ;
 }
 
     $result=$mysqli->query($sql);
@@ -141,7 +171,19 @@ $sql="SELECT DISTINCT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, dat
                         <td><?php echo $row['tipo_doc']; ?></td>
                         <td><?php echo $row['fecha']; ?></td>
                         <td><?php echo $row['estado_sol']; ?></td>
-                        <td><a href="#" class="tomar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-checkmark"></span></a></td>
+                        <td>
+                          <?php 
+                          if ($id_estado_click==0){
+                          ?>
+                          <a href="#" class="tomar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-checkmark espacio"></span></a>
+                          <?php 
+                            } else {
+                          ?>
+                          <a href="#" class="seguir_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-eye espacio"></span></a>
+                          <a href="ver_historial.php?sol=<?php echo $row['id_solicitudes']; ?>&height=450&width=600" title="Folio <?php echo $row['id_solicitudes']; ?>" class="thickbox"><span class="icon-stack espacio"></span></a>
+                          <a href="#" class="liberar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-close espacio"></span></a>
+                           <?php } ?>
+                        </td>
                     </tr>
 <?php }  
 
@@ -153,4 +195,5 @@ $sql="SELECT DISTINCT so.id_solicitudes, us.username,ar.tx_area,td.tipo_doc, dat
         </div>
 <form  action="#" method="post" id="tomar_solicitud">
   <input type="hidden" name="valor_solicitud" id="valor_solicitud" value="#">
+  <input type="hidden" name="accion" id="accion" value="#">
 </form>

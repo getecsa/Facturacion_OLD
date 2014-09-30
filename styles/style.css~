@@ -302,7 +302,7 @@ background: url(../images/botonbgcenter.fw.png) top repeat-x; /* for all you old
     font-family: verdana;
     font-size: 10pt;
     width: 200px;
-    min-height: 40px;
+    min-height: 30px;
 }
 .custom-input-file:hover {
     background-color: #000;

@@ -330,3 +330,17 @@ background: url(../images/botonbgcenter.fw.png) top repeat-x; /* for all you old
     background-color: #fff;
     color: #000;   
 }
+
+
+.contentBoxError{
+    background-color: #FFE9E7;
+    border: 1px solid red;
+    margin-left:30px;
+    margin-top:30px;    
+    width:850px;
+    line-height:auto;
+    padding:10px;
+    font-size:13px;
+    font-family: arial;
+    text-align:center;
+}

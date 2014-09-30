@@ -24,8 +24,16 @@
     content "\e600"
 
 .icon-file
+  &:before 
+    content "\e60b"
+
+.icon-file
   &:before
     content "\e601"
+
+.icon-stack
+  &:before 
+    content: "\e60c"
 
 .icon-download
   &:before
@@ -50,6 +58,10 @@
 .icon-enter
   &:before
     content "\e606"
+
+.icon-exit
+  &:before 
+    content: "\e60a"
 
 .icon-mail
   &:before
@@ -299,3 +311,35 @@ p
         right 0
   .right
     right 0
+
+.espacio
+  margin 0 10px
+
+.detalle_historial
+  font-size small
+  width 100%
+  padding 0px
+  
+  .ancho_historial
+    width 300px
+
+  ul
+    float left
+    margin 0px
+    padding 0px
+    li
+      list-style none
+      padding 4px 9px
+      &.title
+        font-weight bold
+        background #00517a
+        border-top 1px solid #fff
+        color #fff
+      &.title2
+        font-weight bold
+        background #015A86
+        color #fff
+      &.uno
+        background #FFF
+      &.dos
+        background #FFEEE6
