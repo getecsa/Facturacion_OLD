@@ -40,7 +40,9 @@ session_start();
 
 
 $sql = "SELECT fecha_observacion as fecha, observacion 
-FROM `observaciones` WHERE `solicitudes_id_solicitudes` = '$id'";
+FROM `observaciones` WHERE `solicitudes_id_solicitudes` = '$id'
+and estado = '0'
+";
 
 
 

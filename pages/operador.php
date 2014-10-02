@@ -177,6 +177,20 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
          AND hi.area_id_area='$id_area_op'";
 }
 
+if ($id_estado_click==7){
+
+$sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
+        FROM solicitudes so
+  INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes 
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+  INNER JOIN area ar ON so.area_idarea=ar.id_area
+  INNER JOIN estado_solicitud es ON hi.estado_solicitud_idestado_solicitud=es.id_estado_solicitud
+  INNER JOIN users us ON so.users_id_usuario=us.id_usuario
+       WHERE so.estado_actual=7 AND hi.users_id_usuario='$id_user' 
+         AND hi.area_id_area='$id_area_op'";
+}
+
 
     $result=$mysqli->query($sql);
     $bgcolor=0;

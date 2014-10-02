@@ -76,7 +76,7 @@ $sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
 }
 
 if ($param=='Rechazada'){
-$sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
+$sql="SELECT distinct so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
@@ -87,7 +87,7 @@ $sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
 }
 
 if ($param=='Aceptada'){
-$sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
+$sql="SELECT distinct so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes

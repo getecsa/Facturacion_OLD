@@ -37,10 +37,10 @@ function Ocultar(clase,id_b)
 $id = $_GET['id'];
 session_start();
  $id_user = $_SESSION['uid'];
-echo $id;
+
 
 $sql = "SELECT fecha_observacion as fecha, observacion 
-FROM `observaciones` WHERE `solicitudes_idSolicitudes` = '$id'";
+FROM `observaciones` WHERE `solicitudes_id_solicitudes` = '$id'";
 
 
 

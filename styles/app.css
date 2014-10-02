@@ -339,3 +339,14 @@ p {
 .detalle_historial ul li.dos {
   background: #ffeee6;
 }
+.funciones_operador {
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+.funciones_operador div {
+  width: 280px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}

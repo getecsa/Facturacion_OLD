@@ -80,7 +80,7 @@ $result_comentario1=$mysqli->query($sql_comentario);
                 </ul>
                 <ul>
                   <li class="title">Fecha</li>
-<?php while($row = $result_comentario->fetch_array(MYSQLI_ASSOC)) {
+<?php while($row = $result_comentario1->fetch_array(MYSQLI_ASSOC)) {
 ?>                  
                   <li class="uno"><?php echo $row['fecha']; ?></li>
 <?php } ?>                  

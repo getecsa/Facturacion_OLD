@@ -68,7 +68,6 @@ $area_inicial=$row['area_id_area'];
 	} else {
 		$status = "Error al subir archivo";
 	}
-	echo $status;
 
 }
 		
@@ -76,7 +75,7 @@ $area_inicial=$row['area_id_area'];
 		
 if ($archivo != "") 	{
 		$ext_archivo = $id_solicitud.'-'.$archivo;
-		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes) VALUE ('$ext_archivo', '$id_solicitud')";
+		$query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes, id_usuario) VALUE ('$ext_archivo', '$id_solicitud','$id_usuario')";
 		$result_adjunto = $mysqli->query($query_adjuntos);
 }		
 

@@ -16,9 +16,11 @@ $result2=$mysqli->query($sql);
 $result3=$mysqli->query($sql);
 
 $sql_comentario="SELECT date(fecha_observacion) as fecha, observacion as observacion, username as usuario
-        				FROM observaciones hi
-  						INNER JOIN users us ON hi.users_id_usuario=us.id_usuario
-       				WHERE solicitudes_id_solicitudes='$id_solicitud'";
+        				FROM observaciones o
+  						INNER JOIN users us ON o.users_id_usuario=us.id_usuario
+       				WHERE solicitudes_id_solicitudes='$id_solicitud'
+       				and o.estado = '0'
+       				";
 $result_comentario=$mysqli->query($sql_comentario);
 $result_comentario1=$mysqli->query($sql_comentario);
 ?>

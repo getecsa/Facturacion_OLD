@@ -68,7 +68,6 @@ $area_inicial=$row['area_id_area'];
 	} else {
 		$status = "Error al subir archivo";
 	}
-	echo $status;
 
 }
 		
@@ -181,7 +180,7 @@ if ($archivo != "") 	{
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><p><?php echo $razon_social;?></p>
-                        <label for="compa_fac">Compañia facturadora:</label><p><?php echo $compa_fac;?></p>
+                        <label for="compa_fac">Compañía facturadora:</label><p><?php echo $compa_fac;?></p>
                         <label for="moneda">Moneda:</label>
                         <?php 
                             $sql_moneda="select * from moneda where id_moneda=$moneda";
@@ -198,8 +197,8 @@ if ($archivo != "") 	{
   <div id="detalles_factura">
   <table class="gridview" id="agregar_detalle">
     <tr>
-      <td>Codigo Concepto</td>
-      <td>Descripcion Concepto</td>
+      <td>Código Concepto</td>
+      <td>Descripción Concepto</td>
       <td>Unidades</td>
       <td>Precio Unitario</td>
       <td>Cargo</td>

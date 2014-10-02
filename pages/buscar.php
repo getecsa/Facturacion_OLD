@@ -78,7 +78,7 @@ include("cliente.php");
 						while ($fila = mysqli_fetch_assoc($rs)) {
 
 							if($fila["estado_actual"]==0 || $fila["estado_actual"]==1 || $fila["estado_actual"]==2 || $fila["estado_actual"]==3 ||
-             				$fila["estado_actual"]==5 || $fila["estado_actual"]=6){
+             				$fila["estado_actual"]==5 || $fila["estado_actual"]==6){
 									$estatus = 'Pendiente';             
              			}
 							else if($fila["estado_actual"]==4 ){
@@ -93,10 +93,27 @@ include("cliente.php");
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>&bandera=buscar" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"><?php echo $fila["id_solicitudes"]; ?></a></td>
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo utf8_encode($fila["tipo_doc"]); ?></a></td>
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $fila["fecha"]; ?></a></td>
-                       <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $estatus; if($fila["estado_actual"]==7) { echo ' Descargar Documentos: ';}?></a></td>
+                       <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $estatus; ?></a></td>
      						
                     </tr>
-<?php 				}
+                    
+<?php 	
+if($fila["estado_actual"]==7) { 
+
+$adjuntos="SELECT * 
+FROM  `adjuntos` 
+WHERE  `solicitudes_id_solicitudes` =  '$folio'
+AND  `area` =  '6'";
+if ($rs_adjuntos = mysqli_query($con, $adjuntos)) {
+	/* fetch array asociativo*/
+		while ($fila_adjuntos = mysqli_fetch_assoc($rs_adjuntos)) {
+				echo '<a href="Archivos/'.$fila_adjuntos["nombre"].'"><h2>DESCARGAR DOCUMENTO GENERADO</h2></a>';
+		}
+}
+}
+
+			}
+
 					}       
 
 				echo '<tr bgcolor="00517A">                   

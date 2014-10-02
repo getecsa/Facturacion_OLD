@@ -7,7 +7,7 @@
           <div class="content">
 <?php
  include("config.php");
-
+    $area_operador=$_SESSION['area'];
 
   if(isset($_POST["submit"])) {    
 
@@ -17,6 +17,74 @@
     $id_solicitud=$_POST["id_solicitud"];    
     $observaciones=$_POST["observaciones"];
     $id_usuario=$_SESSION['uid'];
+
+    if ($area_flujo==2){
+      
+  //  if(!isset($_POST['justificacion'])){$_POST['justificacion']="";}
+    if(!isset($_POST['oper_plataforma'])){$_POST['oper_plataforma']="";}
+    if(!isset($_POST['oper_oficina'])){$_POST['oper_oficina']="";}
+    if(!isset($_POST['oper_clase'])){$_POST['oper_clase']="";}
+    if(!isset($_POST['oper_canal'])){$_POST['oper_canal']="";}
+    if(!isset($_POST['oper_sector'])){$_POST['oper_sector']="";}
+    if(!isset($_POST['oper_tipo'])){$_POST['oper_tipo']="";}
+    if(!isset($_POST['oper_numero'])){$_POST['oper_numero']="";}
+    
+       $justificacion=$_POST["justificacion"];
+       $oper1=$_POST["oper_plataforma"];
+       $oper2=$_POST["oper_oficina"];
+       $oper3=$_POST["oper_clase"];
+       $oper4=$_POST["oper_canal"];
+       $oper5=$_POST["oper_sector"];
+       $oper6=$_POST["oper_tipo"];
+       $oper7=$_POST["oper_numero"];
+
+    }
+
+    if ($area_flujo==5){
+      
+    if(!isset($_POST['clasificacion'])){$_POST['clasificacion']="";}
+    if(!isset($_POST['proceso'])){$_POST['proceso']="";}
+    if(!isset($_POST['numero_folio'])){$_POST['numero_folio']="";}
+
+    
+       $justificacion=$_POST["justificacion"];
+       $clasificacion=$_POST["clasificacion"];
+       $proceso=$_POST["proceso"];
+       $numero_folio=$_POST["numero_folio"];
+
+    }
+
+   if ($area_flujo==6){
+              $status = "";
+          if ($_POST["action"] == "upload") {
+          // obtenemos los datos del archivo 
+          $tamano = $_FILES["archivo"]['size'];
+          $tipo = $_FILES["archivo"]['type'];
+          $archivo = $_FILES["archivo"]['name'];
+          $prefijo = substr(md5(uniqid(rand())),0,6);
+          
+          if ($archivo != "") {
+            // guardamos el archivo a la carpeta files
+            $destino =  "Archivos/".$id_solicitud.'-'.$archivo;
+            if (copy($_FILES['archivo']['tmp_name'],$destino)) {
+              $status = "Archivo subido: <b>".$archivo."</b>";
+            } else {
+              $status = "Error al subir el archivo";
+            }
+          } else {
+            $status = "Error al subir archivo";
+          }
+
+        }            
+            
+        if ($archivo != "")   {
+            $ext_archivo = $id_solicitud.'-'.$archivo;
+            $query_adjuntos="INSERT INTO adjuntos (nombre, solicitudes_id_solicitudes,id_usuario,area) VALUE ('$ext_archivo', '$id_solicitud','$id_usuario','$area_flujo')";
+            $result_adjunto = $mysqli->query($query_adjuntos);
+        }   
+
+    }
+
 
 
 $sql="SELECT prioridad_flujo, area_flujo, do.tipo_documento_idtipo_doc as tipo_documento
@@ -39,17 +107,42 @@ $cont = $result1->num_rows;
   if($cont==0){
 
         $sql="UPDATE solicitudes
-             SET reservada='2', estado_actual='7',area_flujo='$area_inicial',area_flujo_anterior='$area_flujo',prioridad_flujo='$prioridad',usuario_reserva='$id_usuario'
+             SET reservada='1', estado_actual='7',area_flujo='$area_flujo',area_flujo_anterior='$area_flujo',prioridad_flujo='$prioridad',usuario_reserva='$id_usuario'
            WHERE id_solicitudes='$id_solicitud'";
         $result=$mysqli->query($sql); 
+          if($result){
+             header('Location: homepage.php?id=operador');
+                    } else {
+            echo "Error: No guardado 0" . $mysqli->error;
+                                }
 
     } else {
+
+  //if especial gestion
+        if ($area_flujo==2){
+            $sql="UPDATE documento
+                     SET oper_plataforma='$oper1',oper_oficina='$oper2',oper_clase='$oper3',oper_canal='$oper4',oper_sector='$oper5',oper_tipo='$oper6',oper_numero='$oper7'
+                   WHERE solicitudes_idSolicitudes='$id_solicitud'";       
+            $result=$mysqli->query($sql); 
+          }
+
+        if ($area_flujo==5){
+            $sql="UPDATE documento
+                     SET fac_clasificacion='$clasificacion', fac_proceso='$proceso', fac_numero_folio='$numero_folio'
+                   WHERE solicitudes_idSolicitudes='$id_solicitud'";       
+            $result=$mysqli->query($sql); 
+          }          
 
 
     $sql="UPDATE solicitudes
              SET reservada='0', estado_actual='0',area_flujo='$area_inicial',area_flujo_anterior='$area_flujo',prioridad_flujo='$prioridad',usuario_reserva=''
-           WHERE id_solicitudes='$id_solicitud'";
+           WHERE id_solicitudes='$id_solicitud'";       
+
     $result=$mysqli->query($sql); 
+
+ $query="INSERT INTO observaciones (observacion,fecha_observacion,users_id_usuario,id_documento,solicitudes_id_solicitudes,estado) VALUES ('$justificacion',now(),'$id_usuario','$id_documento','$id_solicitud',1)";
+ $result=$mysqli->query($query);
+
 
  $query="INSERT INTO observaciones (observacion,fecha_observacion,users_id_usuario,id_documento,solicitudes_id_solicitudes) VALUES ('$observaciones',now(),'$id_usuario','$id_documento','$id_solicitud')";
  $result=$mysqli->query($query);
@@ -64,7 +157,7 @@ $cont = $result1->num_rows;
                                 } else {
                                   echo "Error: No guardado 0" . $mysqli->error;
                                 }
-
+                          
 
                   } else{
                     echo "Error: No guardado" . $mysqli->error;
@@ -223,32 +316,137 @@ $cont = $result1->num_rows;
     <td>Total:</td>
     <td><?php echo $iva+$subtotal; ?></td>
    </tr>
+    </table>        
+    <?php
+       if ($area_operador==2){
+     ?>
+      <br>
+    <table class="gridview" class="formulario_operador">
+    <tr bgcolor="#00517A">
+    <td><font color="#ffffff">PLATAFORMA</font></td>
+    <td><font color="#ffffff">OFICINA,SOCIEDAD,REFERENCIA SAP,SUCURSAL,PROGRAMACION</font></td>
+    <td><font color="#ffffff">CLASE DE PEDIDO, FOLIO FISCAL NC, UNIDAD DE MEDIDA</font></td>
+    <td><font color="#ffffff">CANAL, PEFIJO-SERIE</font></td>
+    <td><font color="#ffffff">SECTOR, METODO DE PAGO</font></td>
+    <td><font color="#ffffff">TIPO DE CAMBIO</font></td>
+    <td><font color="#ffffff">NUMERO DE CUENTA DE PAGO</font></td>
+    </tr>
+    <tr>
+      <td><input type="text" size="10" name="oper_plataforma"></td>
+      <td><input type="text" size="25" name="oper_oficina"></td>
+      <td><input type="text" size="25" name="oper_clase"></td>
+      <td><input type="text" size="10" name="oper_canal"></td>
+      <td><input type="text" size="10" name="oper_sector"></td>
+      <td><input type="text" size="10" name="oper_tipo"></td>
+      <td><input type="text" size="10" name="oper_numero"></td>
+    </tr>
     </table>
-      <div class="observaciones">
-      <p>Observaciones:</p><textarea name="observaciones" COLS=30 ROWS=6></textarea>
-      <span>Estado:</span>
- <select name="estado_actual">
-<option value='...'>---</option> 
-<?php
- $id_area=$_SESSION['area'];
-  $sql_per="SELECT pe.id_estado_solicitud, es.estado_sol
-          FROM permisos pe
-    INNER JOIN estado_solicitud es ON pe.id_estado_solicitud=es.id_estado_solicitud 
-         WHERE permiso=1 AND id_area='$id_area' AND es.id_estado_solicitud!='0' AND es.id_estado_solicitud!='1'";
+    <?php } ?>
+    
+     <?php
+       if (($area_operador==5) || ($area_operador==6)) {
+     ?>
+      <br>
+    <table class="gridview" class="formulario_operador">
+    <tr bgcolor="#00517A">
+    <td><font color="#ffffff">PLATAFORMA</font></td>
+    <td><font color="#ffffff">OFICINA,SOCIEDAD,REFERENCIA SAP,SUCURSAL,PROGRAMACION</font></td>
+    <td><font color="#ffffff">CLASE DE PEDIDO, FOLIO FISCAL NC, UNIDAD DE MEDIDA</font></td>
+    <td><font color="#ffffff">CANAL, PEFIJO-SERIE</font></td>
+    <td><font color="#ffffff">SECTOR, METODO DE PAGO</font></td>
+    <td><font color="#ffffff">TIPO DE CAMBIO</font></td>
+    <td><font color="#ffffff">NUMERO DE CUENTA DE PAGO</font></td>
+    </tr>
+    <tr>
+      <?php 
+        $sql="SELECT *
+                FROM documento
+               WHERE solicitudes_idSolicitudes='$id_solicitud'";
+        $result=$mysqli->query($sql);
+        $row=$result->fetch_array(MYSQLI_ASSOC);       
+      ?>
+      <td><?php echo $row['oper_plataforma'];?></td>
+      <td><?php echo $row['oper_oficina'];?></td>
+      <td><?php echo $row['oper_clase'];?></td>
+      <td><?php echo $row['oper_canal'];?></td>
+      <td><?php echo $row['oper_sector'];?></td>
+      <td><?php echo $row['oper_tipo'];?></td>
+      <td><?php echo $row['oper_numero'];?></td>
+    </tr>
+    </table>
+    <?php } ?>
 
-    $result=$mysqli->query($sql_per);
-    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-?>
-  <option value='<?php echo $row['id_estado_solicitud']; ?>'><?php echo $row['estado_sol']; ?></option> 
-                        
-<?php } ?>
-                    
-</select>
+
+      <div class="funciones_operador">
+        <div class="observaciones">
+          <p>Observaciones:</p><textarea name="observaciones" COLS=30 ROWS=6></textarea>
+        </div>
+        <div class="estado">
+      <span>Estado:</span>
+               <select name="estado_actual">
+              <option value='...'>---</option> 
+              <?php
+               $id_area=$_SESSION['area'];
+                $sql_per="SELECT pe.id_estado_solicitud, es.estado_sol
+                        FROM permisos pe
+                  INNER JOIN estado_solicitud es ON pe.id_estado_solicitud=es.id_estado_solicitud 
+                       WHERE permiso=1 AND id_area='$id_area' AND es.id_estado_solicitud!='0' AND es.id_estado_solicitud!='1'";
+
+                  $result=$mysqli->query($sql_per);
+                  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+              ?>
+                <option value='<?php echo $row['id_estado_solicitud']; ?>'><?php echo $row['estado_sol']; ?></option> 
+                                      
+              <?php } ?>
+                                  
+              </select>
+        </div>
+        <?php
+          if (($area_operador!=1) AND ($area_operador!=6) ){
+        ?>
+        <div class="justificacion">
+          <p>Justificacion:</p><textarea name="justificacion" COLS=30 ROWS=6></textarea>
+        </div>
+        <?php 
+          }
+         if ($area_operador==6){
+        ?>
+            <div class="custom-input-file botones">
+            <input type="file" class="input-file" name="archivo" />
+            Adjuntar Archivos
+            <div class="archivo">...</div>
+            <input name="action" type="hidden" value="upload" /> 
+            </div>
+          <?php } ?>
       </div>
+        <?php
+          if ($area_operador==5){
+        ?>
+      <div class="funciones_operador">
+      <div>Clasificacion: <input type="text" name="clasificacion"></div>
+      <div>Proceso: <input type="text" name="proceso"></div>
+      <div>Numero de Folio: <input type="text" name="numero_folio"></div>
+      </div>
+      <?php } ?>
+
+       <?php
+          if ($area_operador==6){
+                $sql="SELECT *
+                FROM documento
+               WHERE solicitudes_idSolicitudes='$id_solicitud'";
+              $result=$mysqli->query($sql);
+              $row=$result->fetch_array(MYSQLI_ASSOC);  
+        ?>
+      <div class="funciones_operador">
+      <div>Clasificacion: <?php echo $row['fac_clasificacion'];?></div>
+      <div>Proceso: <?php echo $row['fac_proceso'];?></div>
+      <div>Numero de Folio: <?php echo $row['fac_numero_folio'];?></div>
+      </div>
+      <?php } ?>     
 
 
         </fieldset>
-                   <div class="boton_envio">                               
+                   <div class="boton_envio">                           
                     <input type="hidden" name="area_flujo" id="area_flujo" value="<?php echo $area_flujo; ?>">
                     <input type="hidden" name="id_documento" value="<?php echo $id_documento; ?>">
                     <input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
