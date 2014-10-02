@@ -58,34 +58,12 @@ if($accion==2){
                  <div class="datos_informacion">
                   <?php
 
-                    $num_pendientes=0;
-                    $num_liberados=0;
-                    $num_rechazado=0;
-
-                    $sql="SELECT *
-                            FROM solicitudes
-                           WHERE estado_actual!=4 || estado_actual!=7 AND area_flujo=$id_area_op";
-                    $result=$mysqli->query($sql);
-                    $num_pendientes=$result->num_rows;
-
-                    $sql="SELECT *
-                            FROM historial_estados
-                           WHERE estado_solicitud_idestado_solicitud=3 AND users_id_usuario=$id_user";
-                    $result=$mysqli->query($sql);
-                    $num_liberados=$result->num_rows;
-
-                    $sql="SELECT *
-                            FROM historial_estados
-                           WHERE estado_solicitud_idestado_solicitud=4 AND users_id_usuario=$id_user";
-                    $result=$mysqli->query($sql);
-                    $num_liberados=$result->num_rows;
-
                   ?>
                   <div class="datos_totales">
-                <p>Total de solicitudes pendientes: <span><?php echo $num_pendientes; ?></span></p> 
-                <p>Total de solicitudes liberadas: <span><?php echo $num_liberados; ?></span></p> 
-                <p>Total de solicitudes rechazadas: <span><?php echo $num_rechazado; ?></span> </p> 
-                <p>Total de solicitudes: <span><?php echo $num_pendientes+$num_liberados+$num_rechazado; ?></span></p> 
+                <p>Total de solicitudes pendientes: <span>0</span></p> 
+                <p>Total de solicitudes liberadas: <span>0</span></p> 
+                <p>Total de solicitudes rechazadas: <span>0</span> </p> 
+                <p>Total de solicitudes: <span>0</span></p> 
                   </div>
 
                   <div class="datos_totales right">
@@ -100,7 +78,7 @@ if($accion==2){
                   $row=$result_estado->fetch_array(MYSQLI_ASSOC);
 
                 ?>
-                                                  <H2>Solicitudes <?php //echo $row['estado_sol'];?></H2>
+                                                  <H2>Solicitudes <?php echo $row['estado_sol'];?></H2>
                     <table class="gridview">
 <tr >
                         <td colspan="8" align="right" bgcolor="00517A"><font color="#fff">Filtro de solicitud:
@@ -150,8 +128,7 @@ $sql="SELECT so.id_solicitudes, do.id_documento, us.username,ar.tx_area,td.tipo_
        WHERE area_flujo='$id_area_op' AND reservada=0 AND estado_actual='$id_estado_click'"  ;
 
 }
-
-if ($id_estado_click==1){
+else {
 $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
@@ -162,21 +139,6 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
        WHERE usuario_reserva='$id_user' AND area_flujo='$id_area_op' AND reservada=1 
          AND estado_actual='$id_estado_click'"  ;
 }
-
-if ($id_estado_click==3){
-
-$sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
-        FROM historial_estados hi
-  INNER JOIN solicitudes so ON hi.solicitudes_idSolicitudes=so.id_solicitudes      
-  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
-  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
-  INNER JOIN area ar ON so.area_idarea=ar.id_area
-  INNER JOIN estado_solicitud es ON hi.estado_solicitud_idestado_solicitud=es.id_estado_solicitud
-  INNER JOIN users us ON so.users_id_usuario=us.id_usuario
-       WHERE hi.estado_solicitud_idestado_solicitud=3 AND hi.users_id_usuario='$id_user' 
-         AND hi.area_id_area='$id_area_op'";
-}
-
 
     $result=$mysqli->query($sql);
     $bgcolor=0;
@@ -198,16 +160,10 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
                           <a href="#" class="tomar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-checkmark espacio"></span></a>
                           <?php 
                             } else {
-
-                              if($id_estado_click==1){
-                              
                           ?>
                           <a href="#" class="seguir_solicitud" id="<?php echo $row['id_solicitudes'];  ?>" rel="<?php echo $row['id_documento'];  ?>"><span class="icon-eye espacio"></span></a>
-                          <a href="#" class="liberar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-close espacio"></span></a>
-                              <?php
-                                }
-                              ?>
                           <a href="ver_historial.php?sol=<?php echo $row['id_solicitudes']; ?>&height=450&width=600" title="Folio <?php echo $row['id_solicitudes']; ?>" class="thickbox"><span class="icon-stack espacio"></span></a>
+                          <a href="#" class="liberar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-close espacio"></span></a>
                            <?php } ?>
                         </td>
                     </tr>

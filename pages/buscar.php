@@ -57,7 +57,7 @@ include("cliente.php");
  
    		$folio = $_POST["folio"];
    
-			$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha, so.estado_actual
+			$sql="SELECT distinct so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha, so.estado_actual
         	FROM solicitudes so
   			INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   			INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
@@ -114,13 +114,13 @@ FROM `observaciones` WHERE `solicitudes_id_solicitudes` = '$folio'";
 			echo '<tr>           				
                         <td colspan="2">'.$fila["fecha"].'</td>
                         <td colspan="2">'.utf8_encode($fila["observacion"]).'</td>                 
-               </tr>                    
- 			</table>';
+               </tr>';                    
+ 			
 		}
 
 	}
     
-    
+   echo  '</table>';
 }
 
 else if(isset($_POST["buscar"])&& $_POST["buscar"]== 'Buscar Tipo') {

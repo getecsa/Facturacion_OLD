@@ -2,7 +2,7 @@
       <div class="contenedor">
                   <div class="header">
                       <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                      <h1>Confirmacion Nota de credito</h1>
+                      <h1>Confirmación Nota de crédito</h1>
                   </div>
           <div class="content">
 <?php
@@ -47,7 +47,7 @@ $result=$mysqli->query($query);
 $row=$result->fetch_array(MYSQLI_ASSOC);
 $area_inicial=$row['area_id_area'];
 
- $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."',1,0)";
+ $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,area_flujo_anterior,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."','".$id_area."',1,0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
@@ -158,7 +158,7 @@ if ($archivo != "") 	{
                         <label for="folio_fac_origen">Folio factura origen:</label><p><?php echo $folio_fac_origen;?></p>
                       </div>  
                       <div class="column bottom_nc">
-                      <label for="tipo_nc">Tipo Nota Credito:</label><p><?php echo $tipo_nc;?></p>
+                      <label for="tipo_nc">Tipo Nota Crédito:</label><p><?php echo $tipo_nc;?></p>
                       <label for="iva">IVA:</label>
                         <?php 
                             $sql_iva="select * from iva where id_iva=$iva";
@@ -182,15 +182,15 @@ if ($archivo != "") 	{
                               }
                           ?>
 
-                        <label for="fecha_emision_nc">Fecha Emision:</label><p><?php echo $fecha_emision_nc;?></p>
+                        <label for="fecha_emision_nc">Fecha Emisión:</label><p><?php echo $fecha_emision_nc;?></p>
                         <label for="monto_afectar_nc">Monto Afectar con NC:</label><p><?php echo $monto_afectar_nc;?></p>
                       </div>
                     
   <div id="detalles_factura">
   <table class="gridview" id="agregar_detalle">
     <tr>
-      <td>Codigo Concepto</td>
-      <td>Descripcion Concepto</td>
+      <td>Código Concepto</td>
+      <td>Descripción Concepto</td>
       <td>Unidades</td>
       <td>Precio Unitario</td>
       <td>Cargo</td>

@@ -230,6 +230,18 @@ $("#accion").val(2);
 $('#tomar_solicitud').submit();  
 });
 
+//funcion para seguir solicitud
+
+$('.seguir_solicitud').click(function(){
+var id_solicitud = $(this).attr("id");
+var id_documento = $(this).attr("rel");
+console.log(id_documento);
+$('#tomar_solicitud').attr('action', 'homepage.php?id=operacion_factura');
+$("#valor_solicitud").val(id_solicitud);
+$("#id_documento").val(id_documento);
+$('#tomar_solicitud').submit();  
+});
+
 
 }); 
 

@@ -47,7 +47,7 @@ $result=$mysqli->query($query);
 $row=$result->fetch_array(MYSQLI_ASSOC);
 $area_inicial=$row['area_id_area'];
 
- $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."',1,0)";
+ $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,area_flujo_anterior,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."','".$id_area."',1,0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 

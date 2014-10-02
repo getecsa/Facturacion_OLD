@@ -57,7 +57,7 @@ include("cliente.php");
  
    		$folio = $_POST["folio"];
    
-			$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha, so.estado_actual
+			$sql="SELECT distinct so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha, so.estado_actual
         	FROM solicitudes so
   			INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   			INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
@@ -93,7 +93,7 @@ include("cliente.php");
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>&bandera=buscar" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"><?php echo $fila["id_solicitudes"]; ?></a></td>
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo utf8_encode($fila["tipo_doc"]); ?></a></td>
                         <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $fila["fecha"]; ?></a></td>
-                       <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $estatus; if($estatus=='7') { echo ' Descargar Documentos: ';}?></a></td>
+                       <td><a href="ver_folio.php?id=<?php echo $fila["id_solicitudes"];?>" title="Folio <?php echo $fila["id_solicitudes"];?>" class="thickbox"> <?php echo $estatus; if($fila["estado_actual"]==7) { echo ' Descargar Documentos: ';}?></a></td>
      						
                     </tr>
 <?php 				}

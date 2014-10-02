@@ -42,7 +42,7 @@ location = location.pathname + '?id=solicitante&param=' + valor;
                 <div class="content">
  
                                                   <H2>Solicitudes <?php echo $param;?></H2>
-                    <table class="gridview">
+                    <table class="gridview" width=30%>
 <tr >
                         <td colspan="7" align="right" bgcolor="00517A"><font color="#fff">Filtro de solicitud:
                         <select id='mySelect' onchange='enviar_parametro(this.value);'>
@@ -66,7 +66,7 @@ location = location.pathname + '?id=solicitante&param=' + valor;
 //Si el estado esta en proceso para el solicitante
 
 if ($param=='Pendiente'){
-$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+$sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
@@ -76,7 +76,7 @@ $sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
 }
 
 if ($param=='Rechazada'){
-$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+$sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
@@ -87,7 +87,7 @@ $sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
 }
 
 if ($param=='Aceptada'){
-$sql="SELECT so.id_solicitudes, td.tipo_doc, date(so.fecha_solicitud) as fecha
+$sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
         FROM solicitudes so
   INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes

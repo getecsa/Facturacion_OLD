@@ -49,10 +49,10 @@ $id_usuario=$_SESSION['uid'];
   <div class="contenedor">
               <div class="header">
                   <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                  <h1>Nueva nota de credito</h1>
+                  <h1>Nueva nota de crédito</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=nueva_nota_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=nueva_nota_pro" method="post" name="form1" id="form1">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" <?php if($return==1){ echo 'value="'.$cod_cliente.'"';} else{ ?> value="<?php echo $_POST['codigo_cliente']; }?>" />
@@ -61,14 +61,15 @@ $id_usuario=$_SESSION['uid'];
                         <label for="folio_fac_origen">Folio factura origen:</label><input type="text" name="folio_fac_origen" id="folio_fac_origen" <?php if($return==1){ echo 'value="'.$folio_fac_origen.'"';} ?> />
                       </div>  
                       <div class="column bottom_nc">   
-                      <label for="tipo_nc">Tipo Nota Credito:</label>
+                      <label for="tipo_nc">Tipo Nota:</label>
                       <select name="tipo_nc">
-                        <option>Seleccione Tipo</option>
+                        <option value="0">Seleccione Tipo</option>
                         <option <?php if($return==1){ if($tipo_nc=="Parcial") { echo"selected"; } } ?> >Parcial</option>
                         <option <?php if($return==1){ if($tipo_nc=="Total") { echo"selected"; } } ?> >Total</option>
                       </select>
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
+                      <option value="0">Seleccione IVA</option>
                       <?php 
                             while($row=mysql_fetch_array($result_iva)){
                             echo "<option value='",$row['id_iva'],"'";
@@ -89,6 +90,7 @@ $id_usuario=$_SESSION['uid'];
                         <label for="razon_social">Razón Social:</label><input type="text" name="razon_social" id="razon_social" <?php if($return==1){ echo 'value="'.$razon_social.'"';} ?>/>
                         <label for="moneda">Moneda:</label>
                         <select name="moneda">
+                        <option value="0">Seleccione Moneda</option>
                           <?php 
                             while($row=mysql_fetch_array($result_moneda)){
                             echo "<option value='",$row['id_moneda'],"'";
@@ -102,15 +104,15 @@ $id_usuario=$_SESSION['uid'];
                               }
                           ?>
                         </select>
-                        <label for="fecha_emision_nc">Fecha Emision:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" <?php if($return==1){ echo 'value="'.$fecha_emision_nc.'"';} ?> />
+                        <label for="fecha_emision_nc">Fecha Emisión:</label><input type="text" name="fecha_emision_nc" id="fecha_emision_nc" readonly="readonly" <?php if($return==1){ echo 'value="'.$fecha_emision_nc.'"';} ?> />
                         <label for="monto_afectar_nc">Monto Afectar con NC:</label><input type="text" name="monto_afectar_nc" id="monto_afectar_nc" <?php if($return==1){ echo 'value="'.$monto_afectar_nc.'"';} ?> />
                       </div>
                     
   <div id="detalles_factura">
   <table class="gridview" id="agregar_detalle">
     <tr>
-      <td>Codigo Concepto</td>
-      <td>Descripcion Concepto</td>
+      <td>Código Concepto</td>
+      <td>Descripción Concepto</td>
       <td>Unidades</td>
       <td>Precio Unitario</td>
       <td>Cargo</td>
@@ -120,7 +122,7 @@ $id_usuario=$_SESSION['uid'];
       <?php
     if($return==1){
     $subtotal=0;
-    for($i=1;$i<=$num_concepto;$i++){
+    for($i=1;$i<=$num_concepto;$i++){	
     $subtotal=$subtotal+$array_cont[$i][6];
     ?>
   
@@ -184,6 +186,7 @@ $id_usuario=$_SESSION['uid'];
     <td>$200</td>
    </tr>
   </table> 
+  <div id="errorForm"></div>
         </fieldset>
                    <div class="boton_envio">
                     <input  type="hidden" value="<?php echo $return; ?>" name="return" id="return">
@@ -191,7 +194,7 @@ $id_usuario=$_SESSION['uid'];
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
                     <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">
-                    <input type="submit" id="submit" name="submit" value="Enviar" >
+                    <input type="submit" id="submit" name="submit" value="Enviar" onclick="return validarUsuarioNotaCredito();">
                     <input type="reset" value="Borrar" >
                   </div>
 

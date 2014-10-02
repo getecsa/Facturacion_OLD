@@ -55,7 +55,7 @@ $return=1;
                   <h1>Nueva Refactura con cambio</h1>
               </div>
   <div class="content">
-                  <form class="formulario_n" action="homepage.php?id=refactura_con_cambio_pro" method="post">
+                  <form class="formulario_n" action="homepage.php?id=refactura_con_cambio_pro" method="post" name="form1" id="form1">
                     <fieldset>
                       <div class="column">
                         <label for="cod_cliente">Código de cliente:</label><input type="text" name="cod_cliente" id="cod_cliente" <?php if($return==1){ echo 'value="'.$cod_cliente.'"';} else{ ?>  value="<?php echo $_POST['codigo_cliente']; }?>" readonly="readonly" />
@@ -69,6 +69,7 @@ $return=1;
                       <div class="column bottom_nc">   
                       <label for="moneda">Moneda:</label>
                        <select name="moneda">
+                       <option value="0">Seleccione Moneda</option>
                           <?php 
                             while($row=mysql_fetch_array($result_moneda)){
                             echo "<option value='",$row['id_moneda'],"'";
@@ -84,6 +85,7 @@ $return=1;
                         </select>
                       <label for="iva">IVA:</label>
                       <select id="iva" name="iva">
+                      <option value="0">Seleccione IVA</option>
                       <?php 
                             while($row=mysql_fetch_array($result_iva)){
                             echo "<option value='",$row['id_iva'],"'";
@@ -191,15 +193,17 @@ $return=1;
     <td></td>
     <td>$200</td>
    </tr>
-  </table> 
+  </table>
+    <div id="errorForm"></div> 
+  
         </fieldset>
                    <div class="boton_envio">
                     <input  type="hidden" value="<?php echo $return; ?>" name="return" id="return">
                     <input  type="hidden" value="<?php echo $num_return; ?>" name="num_return" id="num_return">
                     <input  type="hidden" id="num_concepto" value="1" name="num_concepto">
                     <input  type="hidden"  value="<?php echo $tipo_cliente; ?>" name="tipo_cliente">
-                    <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">
-                    <input type="submit" id="submit" name="submit" value="Enviar" >
+                    <input  type="hidden"  value="<?php echo $tipo_documento; ?>" name="tipo_documento">																																																																						
+                    <input type="submit" id="submit" name="submit" value="Enviar" onclick="return validarUsuarioRefacturaCon();">
                     <input type="reset" value="Borrar" >
                   </div>
 

@@ -2,7 +2,7 @@
       <div class="contenedor">
                   <div class="header">
                       <img alt="Movistar" class="logotipo" src="images/logo.png" />
-                      <h1>Confirmacion Factura</h1>
+                      <h1>Confirmación Factura</h1>
                   </div>
           <div class="content">
 <?php
@@ -44,7 +44,7 @@ $result=$mysqli->query($query);
 $row=$result->fetch_array(MYSQLI_ASSOC);
 $area_inicial=$row['area_id_area'];
 
- $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."',1,0)";
+ $query="INSERT INTO solicitudes (fecha_solicitud,reservada,area_idarea,tipo_cliente_idtipo_cliente,users_id_usuario,estado_actual,area_flujo,area_flujo_anterior,prioridad_flujo,subprioridad_flujo) VALUES (now(),0,'".$id_area."','".$tipo_cliente."','".$id_usuario."',0,'".$area_inicial."','".$id_area."',1,0)";
  $result=$mysqli->query($query);
  $id_solicitud=$mysqli->insert_id;
 
@@ -181,7 +181,7 @@ if ($archivo != "") 	{
 
                       <div class="column">      
                         <label for="razon_social">Razón Social:</label><p><?php echo $razon_social;?></p>
-                        <label for="compa_fac">Compañia facturadora:</label><p><?php echo $compa_fac;?></p>
+                        <label for="compa_fac">Compañía facturadora:</label><p><?php echo $compa_fac;?></p>
                         <label for="moneda">Moneda:</label>
                         <?php 
                             $sql_moneda="select * from moneda where id_moneda=$moneda";
@@ -198,8 +198,8 @@ if ($archivo != "") 	{
   <div id="detalles_factura">
   <table class="gridview" id="agregar_detalle">
     <tr>
-      <td>Codigo Concepto</td>
-      <td>Descripcion Concepto</td>
+      <td>Código Concepto</td>
+      <td>Descripción Concepto</td>
       <td>Unidades</td>
       <td>Precio Unitario</td>
       <td>Cargo</td>
