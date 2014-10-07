@@ -72,7 +72,7 @@ $sql="SELECT so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fecha
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
        WHERE so.users_id_usuario='$id_user'
          AND so.estado_actual=0 || so.estado_actual=1 || so.estado_actual=2 || so.estado_actual=3 ||
-             so.estado_actual=5 || so.estado_actual=6";
+             so.estado_actual=5 || so.estado_actual=6 ORDER BY fecha DESC";
 }
 
 if ($param=='Rechazada'){
@@ -82,7 +82,7 @@ $sql="SELECT distinct so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fech
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
        WHERE so.users_id_usuario='$id_user'
-         AND so.estado_actual=4";
+         AND so.estado_actual=4 ORDER BY fecha DESC";
 
 }
 
@@ -93,7 +93,7 @@ $sql="SELECT distinct so.id_solicitudes, td.tipo_doc, so.fecha_solicitud as fech
   INNER JOIN historial_estados hi ON so.id_solicitudes=hi.solicitudes_idSolicitudes
   INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
        WHERE so.users_id_usuario='$id_user'
-         AND so.estado_actual=7";
+         AND so.estado_actual=7 ORDER BY fecha DESC";
 
 }
 

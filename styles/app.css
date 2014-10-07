@@ -219,8 +219,13 @@ p {
   width: 140px;
   height: 14px;
   float: left;
-  margin: 0;
+  margin-top: 3px;
   padding: 5px;
+}
+.formulario_n .column p input {
+  display: block;
+  margin-top: -10px;
+  margin-left: -3px;
 }
 .formulario_n .bottom {
   margin-top: 64px;
@@ -269,7 +274,7 @@ p {
   display: none;
 }
 .ancho_descripcion {
-  width: 400px;
+  width-max: 400px;
 }
 .boton_envio {
   display: block;

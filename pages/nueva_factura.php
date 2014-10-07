@@ -138,7 +138,7 @@ $id_usuario=$_SESSION['uid'];
      <?php }  } else {?>
 
     <tr class="add_factura">
-      <td><input type="text" size="10" name="add_cont[1][0]" value="Cod" /> </td>
+      <td><input type="text" size="10" name="add_cont[1][0]" /> </td>
       <td><input type="text" name="add_cont[1][1]" /></td>
       <td><input type="text" size="10" name="add_cont[1][2]" class="calcular_subtotal total_unidades" /></td>
       <td><input type="text" size="10" name="add_cont[1][3]" class="calcular_subtotal" /></td>

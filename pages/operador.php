@@ -13,6 +13,21 @@
     $accion=$_POST['accion'];
 
 
+
+if(isset($_POST['bandera'])) {
+	
+	echo 'form'.$_POST['comentario'].$_POST['id_observacion'];
+	$comentario = $_POST['comentario'];
+	$id_observacion = $_POST['id_observacion'];
+$sql="UPDATE `sis_fac`.`observaciones` 
+SET `observacion` = concat(observacion, '<br>' ,now(), '-', '$comentario') 
+WHERE `observaciones`.`id_observaciones` = '$id_observacion'";
+$result=$mysqli->query($sql);
+
+}
+	
+
+
 if($accion==1){
     $sql="UPDATE solicitudes
              SET reservada='1', estado_actual='1',area_flujo='$id_area',usuario_reserva='$id_user'
@@ -147,7 +162,7 @@ $sql="SELECT so.id_solicitudes, do.id_documento, us.username,ar.tx_area,td.tipo_
   INNER JOIN area ar ON so.area_idarea=ar.id_area
   INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
-       WHERE area_flujo='$id_area_op' AND reservada=0 AND estado_actual='$id_estado_click'"  ;
+       WHERE area_flujo='$id_area_op' AND reservada=0 AND estado_actual='$id_estado_click' ORDER BY fecha DESC"  ;
 
 }
 
@@ -160,7 +175,19 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
   INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
        WHERE usuario_reserva='$id_user' AND area_flujo='$id_area_op' AND reservada=1 
-         AND estado_actual='$id_estado_click'"  ;
+         AND estado_actual='$id_estado_click' ORDER BY fecha DESC"  ;
+}
+
+if (($id_estado_click==2) || ($id_estado_click==5) || ($id_estado_click==6)){
+$sql="SELECT so.id_solicitudes, do.id_documento, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+  INNER JOIN area ar ON so.area_idarea=ar.id_area
+  INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
+  INNER JOIN users us ON so.users_id_usuario=us.id_usuario
+       WHERE area_flujo='$id_area_op' AND estado_actual='$id_estado_click' ORDER BY fecha DESC"  ;
+
 }
 
 if ($id_estado_click==3){
@@ -174,7 +201,19 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
   INNER JOIN estado_solicitud es ON hi.estado_solicitud_idestado_solicitud=es.id_estado_solicitud
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
        WHERE hi.estado_solicitud_idestado_solicitud=3 AND hi.users_id_usuario='$id_user' 
-         AND hi.area_id_area='$id_area_op'";
+         AND hi.area_id_area='$id_area_op' ORDER BY fecha DESC";
+}
+
+if ($id_estado_click==4){
+$sql="SELECT so.id_solicitudes, do.id_documento, us.username,ar.tx_area,td.tipo_doc, date(so.fecha_solicitud) as fecha, es.estado_sol
+        FROM solicitudes so
+  INNER JOIN documento do ON so.id_solicitudes=do.solicitudes_idSolicitudes
+  INNER JOIN tipo_documento td ON do.tipo_documento_idtipo_doc=td.id_tipo_doc
+  INNER JOIN area ar ON so.area_idarea=ar.id_area
+  INNER JOIN estado_solicitud es ON so.estado_actual=es.id_estado_solicitud
+  INNER JOIN users us ON so.users_id_usuario=us.id_usuario
+       WHERE area_flujo='$id_area_op' AND estado_actual='$id_estado_click' ORDER BY fecha DESC"  ;
+
 }
 
 if ($id_estado_click==7){
@@ -188,7 +227,7 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
   INNER JOIN estado_solicitud es ON hi.estado_solicitud_idestado_solicitud=es.id_estado_solicitud
   INNER JOIN users us ON so.users_id_usuario=us.id_usuario
        WHERE so.estado_actual=7 AND hi.users_id_usuario='$id_user' 
-         AND hi.area_id_area='$id_area_op'";
+         AND hi.area_id_area='$id_area_op' ORDER BY fecha DESC";
 }
 
 
@@ -213,15 +252,17 @@ $sql="SELECT so.id_solicitudes, do.id_documento,us.username,ar.tx_area,td.tipo_d
                           <?php 
                             } else {
 
-                              if($id_estado_click==1){
+                              if(($id_estado_click==1) || ($id_estado_click==2) || ($id_estado_click==5) || ($id_estado_click==6)){
                               
                           ?>
                           <a href="#" class="seguir_solicitud" id="<?php echo $row['id_solicitudes'];  ?>" rel="<?php echo $row['id_documento'];  ?>"><span class="icon-eye espacio"></span></a>
-                          <a href="#" class="liberar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-close espacio"></span></a>
-                              <?php
+                           <?php
                                 }
+                            if ($id_estado_click==1){
                               ?>
-                          <a href="ver_historial.php?sol=<?php echo $row['id_solicitudes']; ?>&height=450&width=600" title="Folio <?php echo $row['id_solicitudes']; ?>" class="thickbox"><span class="icon-stack espacio"></span></a>
+                          <a href="#" class="liberar_solicitud" id="<?php echo $row['id_solicitudes']; ?>"><span class="icon-close espacio"></span></a>
+                            <?php } ?>
+                          <a href="ver_historial.php?sol=<?php echo $row['id_solicitudes']; ?>&height=450&width=650" title="Folio <?php echo $row['id_solicitudes']; ?>" class="thickbox"><span class="icon-stack espacio"></span></a>
                            <?php } ?>
                         </td>
                     </tr>
